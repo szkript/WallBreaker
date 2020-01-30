@@ -1,0 +1,18 @@
+﻿<Window x:Class="Pong.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pong"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Canvas x:Name="PongCanvas" Height="420" Margin="0,0,-0.4,0" VerticalAlignment="Top" Width="794" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Loaded="PongCanvas_Loaded">
+            <Label x:Name="Score" Content=""/>
+            <Rectangle x:Name="Paddle" Fill="#FF86FF00" Height="20" Canvas.Left="301" Stroke="Black" Canvas.Top="390" Width="150"/>
+            <Rectangle x:Name="Ball" Fill="#FF00E8FF" Height="25" Canvas.Left="366" Stroke="Black" Canvas.Top="179" Width="25"/>
+        </Canvas>
+        <ProgressBar x:Name="pongRessBar" HorizontalAlignment="Left" Height="13" Margin="0,407,0,0" VerticalAlignment="Top" Width="784" Opacity="0.5" Foreground="#FF057419"/>
+
+    </Grid>
+</Window>
