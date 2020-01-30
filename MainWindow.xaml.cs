@@ -2,8 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Threading;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Pong
 {
@@ -20,9 +21,27 @@ namespace Pong
         private int score;
         private int startingBallSpeed = 5;
 
+
         public MainWindow()
         {
             InitializeComponent();
+            Rectangle recti = CreateRectangle();
+            Canvas.SetTop(recti, 20);
+            Canvas.SetLeft(recti, 100);
+            PongCanvas.Children.Add(recti);
+        }
+        private Rectangle CreateRectangle()
+        {
+            Rectangle rect = new Rectangle();
+            rect.Stroke = Brushes.Red;
+            rect.Width = 50;
+            rect.Height = 20;
+            rect.Fill = Brushes.Black;
+            rect.VerticalAlignment = VerticalAlignment.Center;
+            return rect;
+        }
+        private void AddRectangleToCanvas(dynamic rectangle)
+        {
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -88,7 +107,7 @@ namespace Pong
                     break;
                 case GameState.GameOver:
                     paused = true;
-                    Game_overWindow gameOver = new Game_overWindow(GameState.GameOver,score);
+                    Game_overWindow gameOver = new Game_overWindow(GameState.GameOver, score);
                     gameOver.ShowDialog();
                     paused = false;
                     if (gameOver.exitConfirmed())
@@ -118,7 +137,7 @@ namespace Pong
                         startGame();
                     }
                     break;
-            } 
+            }
         }
 
         private void stopGame()
