@@ -24,7 +24,7 @@ namespace Pong
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
             Random random = new Random();
             int randomDirX = -100 + random.Next(0, 201);
-            int randomDirY = -100 + random.Next(0, 201);
+            int randomDirY = 0 + random.Next(0, 201);
             direction = new Vector2(randomDirX, randomDirY);
             direction = Vector2.Normalize(direction);
             speedMultiplier(ballStartingSpeed);
