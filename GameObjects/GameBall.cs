@@ -14,7 +14,7 @@ namespace Pong
         private double canvasWidth;
         private double canvasHeight;
 
-        public GameBall(Rectangle ball, double canvasWidth, double canvasHeight)
+        public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int ballStartingSpeed)
         {
             this.ball = ball;
             this.canvasWidth = canvasWidth;
@@ -27,6 +27,7 @@ namespace Pong
             int randomDirY = -100 + random.Next(0, 201);
             direction = new Vector2(randomDirX, randomDirY);
             direction = Vector2.Normalize(direction);
+            speedMultiplier(ballStartingSpeed);
         }
 
         public void move()
@@ -82,6 +83,13 @@ namespace Pong
             else if (velocity.Y < 0)
             {
                 velocity.Y -= 1;
+            }
+        }
+        private void speedMultiplier(int speedUpXTimes)
+        {
+            for (int i = 0; i < speedUpXTimes; i++)
+            {
+                this.speedUp();
             }
         }
 

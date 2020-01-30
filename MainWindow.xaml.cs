@@ -15,10 +15,10 @@ namespace Pong
         private DispatcherTimer _timer;
         private GameBall ball;
         private DispatcherTimer _gameloopTimer;
-        private DispatcherTimer _speedTimer;
         private bool paused { set; get; } = false;
         private Paddle paddle;
         private int score;
+        private int startingBallSpeed = 5;
 
         public MainWindow()
         {
@@ -125,7 +125,6 @@ namespace Pong
         {
             _timer.Stop();
             _gameloopTimer.Stop();
-            _speedTimer.Stop();
         }
 
         private void PongCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -136,7 +135,7 @@ namespace Pong
         private void startGame()
         {
             score = 0;
-            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight);
+            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);
@@ -147,11 +146,6 @@ namespace Pong
             _gameloopTimer.Interval = new TimeSpan(0, 0, 0, 0, 8);
             _gameloopTimer.Tick += new EventHandler(gameLoop);
             _gameloopTimer.Start();
-
-            _speedTimer = new DispatcherTimer();
-            _speedTimer.Interval = new TimeSpan(0, 0, 15);
-            _speedTimer.Tick += new EventHandler(speedUpBall);
-            _speedTimer.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -220,9 +214,5 @@ namespace Pong
             }
         }
 
-        private void speedUpBall(object sender, EventArgs e)
-        {
-            ball.speedUp();
-        }
     }
 }
