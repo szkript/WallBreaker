@@ -25,10 +25,24 @@ namespace Pong
         public MainWindow()
         {
             InitializeComponent();
-            Rectangle recti = CreateRectangle();
-            Canvas.SetTop(recti, 20);
-            Canvas.SetLeft(recti, 100);
-            PongCanvas.Children.Add(recti);
+            InitBricks(5);
+        }
+        private void InitBricks(int NumOfRows)
+        {
+            double posTop = 20;
+            for (int i = 0; i < NumOfRows; i++)
+            {
+                double posLeft = 10;
+                while (PongCanvas.Width > posLeft + 50)
+                {
+                    Rectangle recti = CreateRectangle();
+                    Canvas.SetTop(recti, posTop);
+                    Canvas.SetLeft(recti, posLeft);
+                    PongCanvas.Children.Add(recti);
+                    posLeft += recti.Width + 5;
+                }
+                posTop += 30;
+            }
         }
         private Rectangle CreateRectangle()
         {
@@ -39,9 +53,6 @@ namespace Pong
             rect.Fill = Brushes.Black;
             rect.VerticalAlignment = VerticalAlignment.Center;
             return rect;
-        }
-        private void AddRectangleToCanvas(dynamic rectangle)
-        {
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
