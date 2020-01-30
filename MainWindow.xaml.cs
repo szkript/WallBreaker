@@ -17,12 +17,8 @@ namespace Pong
         private DispatcherTimer _gameloopTimer;
         private DispatcherTimer _speedTimer;
         private bool paused { set; get; } = false;
-        private int score = 0;
-        private double MAX_SCORE = 10000.0;
-        private double timeScore = 0;
         private Paddle paddle;
-        private string PONGRESSBAR_GREEN = "#FF057419";
-        private string PONGRESSBAR_RED = "#FFD92B2B";
+        private int score;
 
         public MainWindow()
         {
@@ -52,7 +48,6 @@ namespace Pong
         private void exitGame()
         {
             togglePause(GameState.Exit);
-
         }
 
         private void togglePause()
@@ -131,9 +126,6 @@ namespace Pong
             _timer.Stop();
             _gameloopTimer.Stop();
             _speedTimer.Stop();
-            pongRessBar.Value = 0;
-            score = 0;
-            timeScore = 0;
         }
 
         private void PongCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -143,6 +135,7 @@ namespace Pong
 
         private void startGame()
         {
+            score = 0;
             ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
             _timer = new DispatcherTimer();
@@ -166,24 +159,6 @@ namespace Pong
             if (!paused)
             {
                 Mouse.OverrideCursor = Cursors.None;
-                timeScore += 1 / 180.0 * 100;
-                if (timeScore >= score / MAX_SCORE * 100.0)
-                {
-                    pongRessBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(PONGRESSBAR_RED));
-                    pongRessBar.Value = timeScore;
-                }
-                else
-                {
-                    pongRessBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(PONGRESSBAR_GREEN));
-                    pongRessBar.Value = score / MAX_SCORE * 100;
-                }
-                if (pongRessBar.Value >= 100)
-                {
-                    _timer.Stop();
-                    gameWon();
-                }
-                if (pongRessBar.Value % 15 == 0)
-                { ball.speedUp(); }
             }
             else
             {
