@@ -30,7 +30,6 @@ namespace Pong
         public MainWindow()
         {
             InitializeComponent();
-            InitBricks(rowOfBricks);
         }
         private void InitBricks(int NumOfRows)
         {
@@ -171,6 +170,7 @@ namespace Pong
         private void startGame()
         {
             score = 0;
+            InitBricks(rowOfBricks);
             ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
             _timer = new DispatcherTimer();
