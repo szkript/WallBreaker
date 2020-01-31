@@ -93,5 +93,47 @@ namespace Pong
             }
         }
 
+        internal void collideBrick(double brickPos)
+        {
+            if (position.X <= 0)
+            {
+                velocity.X = -velocity.X;
+            }
+            if (position.X >= (canvasWidth - (ball.Width + 5)))
+            {
+                velocity.X = -velocity.X;
+            }
+            if (position.Y <= 0)
+            {
+                velocity.Y = -velocity.Y;
+            }
+            if (position.Y >= (canvasHeight - ball.Height))
+            {
+                velocity.Y = -velocity.Y;
+            }
+            position += direction * velocity;
+            ball.SetValue(Canvas.LeftProperty, (double)position.X);
+            ball.SetValue(Canvas.TopProperty, (double)position.Y);
+        }
+        public bool ContactsWith(Rectangle rectangle)
+        {
+            bool result = false;
+            //horizontal
+            double ballX1 = (double)ball.GetValue(Canvas.LeftProperty);
+            //vertical
+            double ballY1 = (double)ball.GetValue(Canvas.TopProperty);
+
+            double brickX1 = (double)rectangle.GetValue(Canvas.TopProperty);
+            double brickX2 = brickX1 + rectangle.ActualWidth;
+            double brickY1 = (double)rectangle.GetValue(Canvas.TopProperty);
+            double brickY2 = brickY1 + rectangle.ActualHeight;
+
+            Console.WriteLine($"y1: {brickY1}, y2: {brickY2}, ball y1: {(int)ballY1}");
+            if (ballY1 <= brickY2 && ballY1 >= brickY1)
+            {
+                return true;
+            }
+            return result;
+        }
     }
 }

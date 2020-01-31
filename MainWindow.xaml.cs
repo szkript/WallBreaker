@@ -22,13 +22,15 @@ namespace Pong
         private bool paused { set; get; } = false;
         private Paddle paddle;
         private int score;
+
         private int startingBallSpeed = 1;
+        private int rowOfBricks = 2;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            InitBricks(2);
+            InitBricks(rowOfBricks);
         }
         private void InitBricks(int NumOfRows)
         {
@@ -235,31 +237,21 @@ namespace Pong
             }
             // to show that you'll get an enumerable of rectangles.
             IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
-            double maxHorizon = 1000;
-            if (goloPosVertical < maxHorizon + 10)
+            List<UIElement> itemsToRemove = new List<UIElement>();
+            foreach (var rect in rectangles)
             {
-                foreach (var rect in rectangles)
+                // do something with the rectangle
+                if (rect.Name == "Brick")
                 {
-                    // do something with the rectangle
-                    if (rect.Name == "Brick")
+                    if (ball.ContactsWith(rect))
                     {
-                        double horizontal = (double)rect.GetValue(Canvas.LeftProperty);
-                        double horizontal2 = horizontal + rect.ActualWidth;
-                        double vertical = (double)rect.GetValue(Canvas.TopProperty);
-                        double vertical2 = vertical + rect.ActualHeight;
-
-                        Console.WriteLine($"brick {vertical} ball->{(int)goloPosVertical}");
-                        //if (vertical + rect.ActualHeight <= goloPosVertical+ && goloPosVertical >= vertical)
-                        //{
-                        //    if (horizontal+rect.ActualHeight >= goloPosHorizontal && goloPosHorizontal <= horizontal+rect.ActualWidth)
-                        //    {
-                        //        Trace.WriteLine($"Collusion on: x:brick->{horizontal} ball->{goloPosHorizontal} y: brick->{vertical} ball->{goloPosVertical}");
-                        //        //ball.inverse(rect);
-                        //    }
-                        //}
+                        itemsToRemove.Add(rect);
                     }
-                    //maxHorizon = (double)rect.GetValue(Canvas.TopProperty);
                 }
+            }
+            foreach (UIElement item in itemsToRemove)
+            {
+                PongCanvas.Children.Remove(item);
             }
             //Trace.WriteLine("Found " + rectangles.Count() + " rectangles, height: " + maxHorizon);
         }
