@@ -24,7 +24,6 @@ namespace Pong
             rect.Width = 50;
             rect.Height = 20;
             rect.Fill = Brushes.Black;
-            //rect.VerticalAlignment = VerticalAlignment.Center;
             brick = rect;
             Height = rect.Height;
             Width = rect.Width;

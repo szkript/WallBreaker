@@ -128,9 +128,11 @@ namespace Pong
             double brickY1 = (double)rectangle.GetValue(Canvas.TopProperty);
             double brickY2 = brickY1 + rectangle.ActualHeight;
 
-            Console.WriteLine($"y1: {brickY1}, y2: {brickY2}, ball y1: {(int)ballY1}");
             if (ballY1 <= brickY2 && ballY1 >= brickY1)
             {
+                
+                Console.WriteLine($"y1: {brickY1}, y2: {brickY2}, ball y1: {(int)ballY1}");
+                direction.Y = Math.Abs(direction.Y);
                 return true;
             }
             return result;
