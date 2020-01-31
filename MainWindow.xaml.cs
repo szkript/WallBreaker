@@ -213,6 +213,7 @@ namespace Pong
 
         private void checkCollusion()
         {
+            PongCanvas.Children.Clear();
             double paddlePosHorizontal = (double)Paddle.GetValue(Canvas.LeftProperty);
             double paddlePosVertical = (double)Paddle.GetValue(Canvas.TopProperty);
             double goloPosHorizontal = (double)Ball.GetValue(Canvas.LeftProperty);
@@ -230,32 +231,43 @@ namespace Pong
             {
                 togglePause(GameState.GameOver);
             }
-            // to show that you'll get an enumerable of rectangles.
-            IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
-
-            int indexOfItemToRemove = -1;
-            foreach (var rect in rectangles.Select((value, i) => new { i, value }))
+            Brick removeAble = null;
+            foreach (Brick brick in bricks)
             {
-                Console.WriteLine(rect.value);
-                // do something with the rectangle
-                if (rect.value.Name == "Brick")
+                if (ball.ContactsWith(brick))
                 {
-                    if (ball.ContactsWith(rect.value))
-                    {
-                        
-                        indexOfItemToRemove = rect.i;
-                    }
+                    Console.WriteLine($"{brick.X},{brick.Y}, ball:{goloPosHorizontal}, {goloPosVertical}");
+                    removeAble = brick;
                 }
             }
+            if (removeAble != null) { bricks.Remove(removeAble); }
+            foreach (Brick brick in bricks)
+            {
+                PongCanvas.Children.Add(brick.brick);
+            }
+            PongCanvas.Children.Add(Paddle);
+            PongCanvas.Children.Add(Ball);
+            // to show that you'll get an enumerable of rectangles.
+            //IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
+
+            //foreach (var rect in rectangles.Select((value, i) => new { i, value }))
+            //{
+            //    Console.WriteLine(rect.value);
+            //    // do something with the rectangle
+            //    if (rect.value.Name == "Brick")
+            //    {
+            //        if (!ball.ContactsWith(rect.value))
+            //        {
+                        
+            //        }
+            //    }
+            //}
             //PongCanvas.Children.Clear();
             //PongCanvas.Children.Add(bricks[1].brick);
 
-            if (indexOfItemToRemove >= 0)
-            {
-                PongCanvas.Children.RemoveAt(indexOfItemToRemove);
-            }
             //Trace.WriteLine("Found " + rectangles.Count() + " rectangles, height: " + maxHorizon);
         }
+
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {

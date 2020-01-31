@@ -115,7 +115,7 @@ namespace Pong
             ball.SetValue(Canvas.LeftProperty, (double)position.X);
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
         }
-        public bool ContactsWith(Rectangle rectangle)
+        public bool ContactsWith(Brick rectangle)
         {
             bool result = false;
             //horizontal
@@ -123,10 +123,10 @@ namespace Pong
             //vertical
             double ballY1 = (double)ball.GetValue(Canvas.TopProperty);
 
-            double brickX1 = (double)rectangle.GetValue(Canvas.TopProperty);
-            double brickX2 = brickX1 + rectangle.ActualWidth;
-            double brickY1 = (double)rectangle.GetValue(Canvas.TopProperty);
-            double brickY2 = brickY1 + rectangle.ActualHeight;
+            double brickX1 = rectangle.X;
+            double brickX2 = brickX1 + rectangle.Width;
+            double brickY1 = rectangle.Y;
+            double brickY2 = brickY1 + rectangle.Height;
 
             if (ballY1 <= brickY2 && ballY1 >= brickY1)
             {
