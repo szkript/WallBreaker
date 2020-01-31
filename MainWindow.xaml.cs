@@ -44,9 +44,9 @@ namespace Pong
                     Brick recti = new Brick();
                     recti.X = posLeft;
                     recti.Y = posTop;
-                    //Canvas.SetTop(recti, posTop);
-                    //Canvas.SetLeft(recti, posLeft);
-                    //PongCanvas.Children.Add(recti);
+                    Canvas.SetTop(recti.brick, posTop);
+                    Canvas.SetLeft(recti.brick, posLeft);
+                    PongCanvas.Children.Add(recti.brick);
                     bricks.Add(recti);
                     posLeft += recti.Width + 5;
                 }
@@ -231,22 +231,26 @@ namespace Pong
                 togglePause(GameState.GameOver);
             }
             // to show that you'll get an enumerable of rectangles.
-            //IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
-            //List<UIElement> itemsToRemove = new List<UIElement>();
-            //foreach (var rect in rectangles)
-            //{
-            //    // do something with the rectangle
-            //    if (rect.Name == "Brick")
-            //    {
-            //        if (ball.ContactsWith(rect))
-            //        {
-            //            itemsToRemove.Add(rect);
-            //        }
-            //    }
-            //}
+            IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
+
+            int indexOfItemToRemove = -1;
+            foreach (var rect in rectangles.Select((value, i) => new { i, value }))
+            {
+                // do something with the rectangle
+                if (rect.value.Name == "Brick")
+                {
+                    if (ball.ContactsWith(rect.value))
+                    {
+                        indexOfItemToRemove = rect.i;
+                    }
+                }
+            }
             //foreach (UIElement item in itemsToRemove)
             //{
-            //    PongCanvas.Children.Remove(item);
+            if (indexOfItemToRemove >= 0)
+            {
+                PongCanvas.Children.RemoveAt(indexOfItemToRemove);
+            }
             //}
             //Trace.WriteLine("Found " + rectangles.Count() + " rectangles, height: " + maxHorizon);
         }

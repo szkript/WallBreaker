@@ -15,7 +15,7 @@ namespace Pong
         public double Y { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
-        private Rectangle brick;
+        public Rectangle brick { get; set; }
         public Brick()
         {
             Rectangle rect = new Rectangle();
@@ -24,8 +24,10 @@ namespace Pong
             rect.Width = 50;
             rect.Height = 20;
             rect.Fill = Brushes.Black;
-            rect.VerticalAlignment = VerticalAlignment.Center;
+            //rect.VerticalAlignment = VerticalAlignment.Center;
             brick = rect;
+            Height = rect.Height;
+            Width = rect.Width;
         }
     }
 }
