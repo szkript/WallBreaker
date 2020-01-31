@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace Pong
 {
@@ -25,11 +26,13 @@ namespace Pong
 
         private int startingBallSpeed = 1;
         private int rowOfBricks = 2;
-
+        private List<Brick> brickList = new List<Brick>();
+        public ObservableCollection<Brick> bricks { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            bricks = new ObservableCollection<Brick>();
         }
         private void InitBricks(int NumOfRows)
         {
@@ -39,26 +42,19 @@ namespace Pong
                 double posLeft = 10;
                 while (PongCanvas.Width > posLeft + 50)
                 {
-                    Rectangle recti = CreateRectangle();
-                    Canvas.SetTop(recti, posTop);
-                    Canvas.SetLeft(recti, posLeft);
-                    PongCanvas.Children.Add(recti);
+                    Brick recti = new Brick();
+                    recti.X = posLeft;
+                    recti.Y = posTop;
+                    //Canvas.SetTop(recti, posTop);
+                    //Canvas.SetLeft(recti, posLeft);
+                    //PongCanvas.Children.Add(recti);
+                    bricks.Add(recti);
                     posLeft += recti.Width + 5;
                 }
                 posTop += 30;
             }
         }
-        private Rectangle CreateRectangle()
-        {
-            Rectangle rect = new Rectangle();
-            rect.Name = "Brick";
-            rect.Stroke = Brushes.Red;
-            rect.Width = 50;
-            rect.Height = 20;
-            rect.Fill = Brushes.Black;
-            rect.VerticalAlignment = VerticalAlignment.Center;
-            return rect;
-        }
+
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -236,23 +232,23 @@ namespace Pong
                 togglePause(GameState.GameOver);
             }
             // to show that you'll get an enumerable of rectangles.
-            IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
-            List<UIElement> itemsToRemove = new List<UIElement>();
-            foreach (var rect in rectangles)
-            {
-                // do something with the rectangle
-                if (rect.Name == "Brick")
-                {
-                    if (ball.ContactsWith(rect))
-                    {
-                        itemsToRemove.Add(rect);
-                    }
-                }
-            }
-            foreach (UIElement item in itemsToRemove)
-            {
-                PongCanvas.Children.Remove(item);
-            }
+            //IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
+            //List<UIElement> itemsToRemove = new List<UIElement>();
+            //foreach (var rect in rectangles)
+            //{
+            //    // do something with the rectangle
+            //    if (rect.Name == "Brick")
+            //    {
+            //        if (ball.ContactsWith(rect))
+            //        {
+            //            itemsToRemove.Add(rect);
+            //        }
+            //    }
+            //}
+            //foreach (UIElement item in itemsToRemove)
+            //{
+            //    PongCanvas.Children.Remove(item);
+            //}
             //Trace.WriteLine("Found " + rectangles.Count() + " rectangles, height: " + maxHorizon);
         }
 
