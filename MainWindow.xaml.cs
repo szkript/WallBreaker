@@ -3,11 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics;
 using System.Collections.ObjectModel;
 
 namespace Pong
@@ -46,7 +41,6 @@ namespace Pong
                     recti.Y = posTop;
                     Canvas.SetTop(recti.brick, posTop);
                     Canvas.SetLeft(recti.brick, posLeft);
-                    PongCanvas.Children.Add(recti.brick);
                     bricks.Add(recti);
                     posLeft += recti.Width + 5;
                 }
@@ -231,6 +225,7 @@ namespace Pong
             {
                 togglePause(GameState.GameOver);
             }
+
             Brick removeAble = null;
             foreach (Brick brick in bricks)
             {
@@ -247,25 +242,6 @@ namespace Pong
             }
             PongCanvas.Children.Add(Paddle);
             PongCanvas.Children.Add(Ball);
-            // to show that you'll get an enumerable of rectangles.
-            //IEnumerable<Rectangle> rectangles = PongCanvas.Children.OfType<Rectangle>();
-
-            //foreach (var rect in rectangles.Select((value, i) => new { i, value }))
-            //{
-            //    Console.WriteLine(rect.value);
-            //    // do something with the rectangle
-            //    if (rect.value.Name == "Brick")
-            //    {
-            //        if (!ball.ContactsWith(rect.value))
-            //        {
-                        
-            //        }
-            //    }
-            //}
-            //PongCanvas.Children.Clear();
-            //PongCanvas.Children.Add(bricks[1].brick);
-
-            //Trace.WriteLine("Found " + rectangles.Count() + " rectangles, height: " + maxHorizon);
         }
 
 
