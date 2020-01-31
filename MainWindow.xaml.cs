@@ -236,22 +236,24 @@ namespace Pong
             int indexOfItemToRemove = -1;
             foreach (var rect in rectangles.Select((value, i) => new { i, value }))
             {
+                Console.WriteLine(rect.value);
                 // do something with the rectangle
                 if (rect.value.Name == "Brick")
                 {
                     if (ball.ContactsWith(rect.value))
                     {
+                        
                         indexOfItemToRemove = rect.i;
                     }
                 }
             }
-            //foreach (UIElement item in itemsToRemove)
-            //{
+            //PongCanvas.Children.Clear();
+            //PongCanvas.Children.Add(bricks[1].brick);
+
             if (indexOfItemToRemove >= 0)
             {
                 PongCanvas.Children.RemoveAt(indexOfItemToRemove);
             }
-            //}
             //Trace.WriteLine("Found " + rectangles.Count() + " rectangles, height: " + maxHorizon);
         }
 

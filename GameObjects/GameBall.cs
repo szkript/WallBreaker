@@ -130,10 +130,13 @@ namespace Pong
 
             if (ballY1 <= brickY2 && ballY1 >= brickY1)
             {
-                
-                Console.WriteLine($"y1: {brickY1}, y2: {brickY2}, ball y1: {(int)ballY1}");
-                direction.Y = Math.Abs(direction.Y);
-                return true;
+                if (ballX1 >= brickX1 && brickX2 >= ballX1)
+                {
+                    //Console.WriteLine($"y1: {brickY1}, y2: {brickY2}, ball y1: {(int)ballY1}, x1:{(int)ballX1}");
+                    direction.Y = Math.Abs(direction.Y);
+                    return true;
+
+                }
             }
             return result;
         }
