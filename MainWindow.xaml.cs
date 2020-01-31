@@ -218,7 +218,6 @@ namespace Pong
                 if (paddlePosHorizontal <= goloPosHorizontal + Ball.ActualWidth && paddlePosHorizontal + Paddle.ActualWidth >= goloPosHorizontal)
                 {
                     ball.inverse(Paddle);
-                    score += 100;
                 }
             }
             if (paddlePosVertical <= goloPosVertical)
@@ -231,6 +230,7 @@ namespace Pong
             {
                 if (ball.ContactsWith(brick))
                 {
+                    score += 100;
                     Console.WriteLine($"{brick.X},{brick.Y}, ball:{goloPosHorizontal}, {goloPosVertical}");
                     removeAble = brick;
                 }
@@ -240,6 +240,7 @@ namespace Pong
             {
                 PongCanvas.Children.Add(brick.brick);
             }
+            PongCanvas.Children.Add(Score);
             PongCanvas.Children.Add(Paddle);
             PongCanvas.Children.Add(Ball);
         }
