@@ -236,6 +236,9 @@ namespace Pong
                 }
             }
             if (removeAble != null) { bricks.Remove(removeAble); }
+
+            if(bricks.Count == 0) { gameWon(); }
+
             foreach (Brick brick in bricks)
             {
                 PongCanvas.Children.Add(brick.brick);
