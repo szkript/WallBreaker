@@ -2,3 +2,6 @@
 
 # SA1614: Element parameter documentation should have text
 dotnet_diagnostic.SA1614.severity = suggestion
+
+# CS0108: Member hides inherited member; missing new keyword
+dotnet_diagnostic.CS0108.severity = none

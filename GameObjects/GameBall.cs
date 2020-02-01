@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -92,32 +90,10 @@ namespace Pong
         {
             for (int i = 0; i < speedUpXTimes; i++)
             {
-                this.speedUp();
+                speedUp();
             }
         }
 
-        internal void collideBrick(double brickPos)
-        {
-            if (position.X <= 0)
-            {
-                velocity.X = -velocity.X;
-            }
-            if (position.X >= (canvasWidth - (ball.Width + 5)))
-            {
-                velocity.X = -velocity.X;
-            }
-            if (position.Y <= 0)
-            {
-                velocity.Y = -velocity.Y;
-            }
-            if (position.Y >= (canvasHeight - ball.Height))
-            {
-                velocity.Y = -velocity.Y;
-            }
-            position += direction * velocity;
-            ball.SetValue(Canvas.LeftProperty, (double)position.X);
-            ball.SetValue(Canvas.TopProperty, (double)position.Y);
-        }
         public bool ContactsWith(Brick rectangle)
         {
             bool result = false;
@@ -131,8 +107,8 @@ namespace Pong
             double brickY1 = rectangle.Position.Y;
             double brickY2 = brickY1 + rectangle.Height;
 
-            List<int>ballTop = Enumerable.Range(ballX1, 25).ToList();
-            List<int>brickBot = Enumerable.Range((int)brickX2, (int)rectangle.Width).ToList();
+            List<int> ballTop = Enumerable.Range(ballX1, 25).ToList();
+            List<int> brickBot = Enumerable.Range((int)brickX2, (int)rectangle.Width).ToList();
             Console.WriteLine(ballTop.Any(x => brickBot.Contains(x)));
             if (ballY1 <= brickY2 && ballY1 >= brickY1)
             {

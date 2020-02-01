@@ -17,8 +17,8 @@ namespace Pong
         private bool paused { set; get; } = false;
         private int score;
 
-        private int startingBallSpeed = 1;
-        private int rowOfBricks = 2;
+        private int startingBallSpeed = 3;
+        private int rowOfBricks = 3;
         public ObservableCollection<Brick> bricks { get; set; }
 
         public MainWindow()

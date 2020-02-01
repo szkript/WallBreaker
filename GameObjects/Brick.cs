@@ -21,7 +21,17 @@
             rect.Height = Height;
             brick = rect;
             Position = position;
-
         }
+        public void GetSideCoordinates()
+        {
+            
+        }
+    }
+    public enum Side
+    {
+        Top,
+        Right,
+        Bottom,
+        Left
     }
 }
