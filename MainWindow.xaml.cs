@@ -4,16 +4,17 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
+using System.Numerics;
 
 namespace Pong
 {
     public partial class MainWindow : Window
     {
-        private DispatcherTimer _timer;
+        private Paddle paddle;
         private GameBall ball;
+        private DispatcherTimer _timer;
         private DispatcherTimer _gameloopTimer;
         private bool paused { set; get; } = false;
-        private Paddle paddle;
         private int score;
 
         private int startingBallSpeed = 1;
@@ -34,18 +35,17 @@ namespace Pong
                 double posLeft = 10;
                 while (PongCanvas.Width > posLeft + 50)
                 {
-                    Brick recti = new Brick();
-                    recti.X = posLeft;
-                    recti.Y = posTop;
-                    Canvas.SetTop(recti.brick, posTop);
-                    Canvas.SetLeft(recti.brick, posLeft);
-                    bricks.Add(recti);
-                    posLeft += recti.Width + 5;
+                    Vector2 position = new Vector2((int)posLeft, (int)posTop);
+                    Brick brick = new Brick(position);
+                    Canvas.SetLeft(brick.brick, position.X);
+                    Canvas.SetTop(brick.brick, position.Y);
+                    bricks.Add(brick);
+                    PongCanvas.Children.Add(brick.brick);
+                    posLeft += brick.Width + 5;
                 }
                 posTop += 30;
             }
         }
-
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -151,10 +151,9 @@ namespace Pong
 
         private void PongCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            
             startGame();
         }
-        
+
         private void startGame()
         {
             score = 0;
@@ -206,7 +205,6 @@ namespace Pong
 
         private void checkCollusion()
         {
-            PongCanvas.Children.Clear();
             double paddlePosHorizontal = (double)Paddle.GetValue(Canvas.LeftProperty);
             double paddlePosVertical = (double)Paddle.GetValue(Canvas.TopProperty);
             double goloPosHorizontal = (double)Ball.GetValue(Canvas.LeftProperty);
@@ -230,23 +228,25 @@ namespace Pong
                 if (ball.ContactsWith(brick))
                 {
                     score += 100;
-                    Console.WriteLine($"{brick.X},{brick.Y}, ball:{goloPosHorizontal}, {goloPosVertical}");
                     removeAble = brick;
                 }
             }
-            if (removeAble != null) { bricks.Remove(removeAble); }
-            
-            if(bricks.Count == 0) { gameWon(); }
-
-            foreach (Brick brick in bricks)
+            if (removeAble != null)
             {
-                PongCanvas.Children.Add(brick.brick);
+                bricks.Remove(removeAble);
+                PongCanvas.Children.Clear();
+                foreach (Brick brick in bricks)
+                {
+                    PongCanvas.Children.Add(brick.brick);
+                }
+                PongCanvas.Children.Add(Score);
+                PongCanvas.Children.Add(Paddle);
+                PongCanvas.Children.Add(Ball);
             }
-            PongCanvas.Children.Add(Score);
-            PongCanvas.Children.Add(Paddle);
-            PongCanvas.Children.Add(Ball);
-        }
 
+            if (bricks.Count == 0) { gameWon(); }
+
+        }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {

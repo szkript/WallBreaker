@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Security;
 using System.Windows.Controls;
@@ -119,23 +122,24 @@ namespace Pong
         {
             bool result = false;
             //horizontal
-            double ballX1 = (double)ball.GetValue(Canvas.LeftProperty);
+            int ballX1 = Convert.ToInt32(ball.GetValue(Canvas.LeftProperty));
             //vertical
             double ballY1 = (double)ball.GetValue(Canvas.TopProperty);
 
-            double brickX1 = rectangle.X;
+            double brickX1 = rectangle.Position.X;
             double brickX2 = brickX1 + rectangle.Width;
-            double brickY1 = rectangle.Y;
+            double brickY1 = rectangle.Position.Y;
             double brickY2 = brickY1 + rectangle.Height;
 
+            List<int>ballTop = Enumerable.Range(ballX1, 25).ToList();
+            List<int>brickBot = Enumerable.Range((int)brickX2, (int)rectangle.Width).ToList();
+            Console.WriteLine(ballTop.Any(x => brickBot.Contains(x)));
             if (ballY1 <= brickY2 && ballY1 >= brickY1)
             {
                 if (ballX1 >= brickX1 && brickX2 >= ballX1)
                 {
-                    //Console.WriteLine($"y1: {brickY1}, y2: {brickY2}, ball y1: {(int)ballY1}, x1:{(int)ballX1}");
                     direction.Y = Math.Abs(direction.Y);
                     return true;
-
                 }
             }
             return result;
