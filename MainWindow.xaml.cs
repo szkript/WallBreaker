@@ -153,9 +153,10 @@ namespace Pong
 
         private void PongCanvas_Loaded(object sender, RoutedEventArgs e)
         {
+            
             startGame();
         }
-
+        
         private void startGame()
         {
             score = 0;
@@ -236,7 +237,7 @@ namespace Pong
                 }
             }
             if (removeAble != null) { bricks.Remove(removeAble); }
-
+            
             if(bricks.Count == 0) { gameWon(); }
 
             foreach (Brick brick in bricks)

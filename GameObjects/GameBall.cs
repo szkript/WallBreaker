@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Security;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -65,7 +66,6 @@ namespace Pong
             position += direction * velocity;
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
         }
-
         internal void speedUp()
         {
             if (velocity.X > 0)
