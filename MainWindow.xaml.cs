@@ -30,6 +30,7 @@ namespace Pong
         }
         private void InitBricks(int NumOfRows)
         {
+            bricks.Clear();
             double posTop = 20;
             for (int i = 0; i < NumOfRows; i++)
             {
