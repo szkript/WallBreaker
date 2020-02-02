@@ -39,7 +39,6 @@
             sides.Add(Side.Right, rightSide);
             sides.Add(Side.Bottom, bottomSide);
             sides.Add(Side.Left, leftSide);
-            Console.WriteLine("brickBot-> " +string.Join(",", sides[Side.Bottom]));
 
         }
     }

@@ -101,23 +101,20 @@ namespace Pong
             int ballX1 = Convert.ToInt32(ball.GetValue(Canvas.LeftProperty));
             //vertical
             double ballY1 = (double)ball.GetValue(Canvas.TopProperty);
-            List<int> ballTop = Enumerable.Range((int)ballY1, (int)ball.Width).ToList();
+            List<int> ballTop = Enumerable.Range((int)ballX1, (int)ball.Width).ToList();
 
+            if (ballY1 <= rectangle.Position.Y + rectangle.sides[Side.Left].Last() 
+                && ballY1 + ball.Width <= rectangle.sides[Side.Right].Last())
+            {
+                if (ballTop.Any(x => rectangle.sides[Side.Bottom].Contains(x)))
+                {
+                    Console.WriteLine("brickBot-> " + string.Join(",", rectangle.sides[Side.Bottom]));
+                    Console.WriteLine("ballTop -> " + string.Join(",", ballTop));
+                    direction.Y = Math.Abs(direction.Y);
+                    return true;
+                }
 
-
-            if (ballTop.Any(x => rectangle.sides[Side.Bottom].Contains(x))){
-                //Console.WriteLine("ballTop -> " + string.Join(",", ballTop));
-                direction.Y = Math.Abs(direction.Y);
-                //return true;
             }
-            //if (ballY1 <= brickY2 && ballY1 >= brickY1)
-            //{
-            //    if (ballX1 >= brickX1 && brickX2 >= ballX1)
-            //    {
-            //        direction.Y = Math.Abs(direction.Y);
-            //        return true;
-            //    }
-            //}
             return result;
         }
     }
