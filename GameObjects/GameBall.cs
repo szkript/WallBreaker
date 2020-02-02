@@ -109,11 +109,9 @@ namespace Pong
             return false;
         }
         private bool BallInRange(Brick brick)
-        {
-            int yRange = 3;
-
-            if ((int)position.Y <= brick.sides[Side.Left].Last() + yRange
-                && (int)position.Y >= brick.sides[Side.Left].First() - yRange)
+        { 
+            if ((int)position.Y <= brick.sides[Side.Left].Last()
+                && (int)position.Y >= brick.sides[Side.Left].First())
             {
                 return true;
             }
