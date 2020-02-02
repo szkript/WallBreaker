@@ -18,7 +18,7 @@ namespace Pong
         private int score;
 
         private int startingBallSpeed = 3;
-        private int rowOfBricks = 3;
+        private int rowOfBricks = 2;
         public ObservableCollection<Brick> bricks { get; set; }
 
         public MainWindow()

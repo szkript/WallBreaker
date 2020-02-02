@@ -30,10 +30,10 @@
 
         private void CalculateSides()
         {
-            List<int> topSide = Enumerable.Range((int)Position.X, (int)Width).ToList();
-            List<int> rightSide = Enumerable.Range((int)Position.Y + (int)Width, (int)Height).ToList();
-            List<int> bottomSide = Enumerable.Range((int)Position.X + (int)Height, (int)Width).ToList();
-            List<int> leftSide = Enumerable.Range((int)Position.Y, (int)Height).ToList();
+            List<int> topSide = Enumerable.Range((int)Position.X, (int)Width+1).ToList();
+            List<int> rightSide = Enumerable.Range((int)Position.Y + (int)Width+1, (int)Height).ToList();
+            List<int> bottomSide = Enumerable.Range((int)Position.X + (int)Height+1, (int)Width).ToList();
+            List<int> leftSide = Enumerable.Range((int)Position.Y, (int)Height+1).ToList();
 
             sides.Add(Side.Top, topSide);
             sides.Add(Side.Right, rightSide);
