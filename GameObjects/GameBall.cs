@@ -22,7 +22,6 @@ namespace Pong
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             position = new Vector2((float)canvasWidth / 2, startingHeightPosition);
-            Console.WriteLine("ballYstart " + startingHeightPosition);
             ball.SetValue(Canvas.LeftProperty, (double)position.X);
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
             Random random = new Random();

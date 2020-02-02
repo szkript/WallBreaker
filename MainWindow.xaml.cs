@@ -45,7 +45,6 @@ namespace Pong
                 }
                 posTop += 30;
             }
-            Console.WriteLine("postop " + posTop);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
