@@ -8,6 +8,7 @@ using System.Numerics;
 
 namespace WallBreaker
 {
+    // TODO: Make it work in MvvM pattern
     public partial class MainWindow : Window
     {
         private Paddle paddle;
