@@ -19,7 +19,7 @@ namespace WallBreaker
             paddle.SetValue(Canvas.LeftProperty, (canvasWidth / 2) - (paddle.ActualWidth / 2));
 
         }
-        public void movePaddle()
+        public void MovePaddle()
         {
             if (MoveLeft)
             {

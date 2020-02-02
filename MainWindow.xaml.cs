@@ -197,7 +197,7 @@ namespace WallBreaker
 
             CheckCollusion();
             ball.Move();
-            paddle.movePaddle();
+            paddle.MovePaddle();
             UpdateLiveScore();
         }
 
