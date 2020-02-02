@@ -9,8 +9,8 @@
 
     public class Brick
     {
-        public double Width { get; set; } = 50;
-        public double Height { get; set; } = 20;
+        private double Width { get; set; } = 50;
+        private double Height { get; set; } = 20;
         public Rectangle brick { get; set; }
         public Vector2 Position;
         public Dictionary<Side, List<int>> sides = new Dictionary<Side, List<int>>();
@@ -30,15 +30,17 @@
 
         private void CalculateSides()
         {
-            List<int> topSide = Enumerable.Range((int)Position.Y, (int)Width).ToList();
+            List<int> topSide = Enumerable.Range((int)Position.X, (int)Width).ToList();
             List<int> rightSide = Enumerable.Range((int)Position.Y + (int)Width, (int)Height).ToList();
-            List<int> bottomSide = Enumerable.Range((int)Position.Y + (int)Height, (int)Width).ToList();
+            List<int> bottomSide = Enumerable.Range((int)Position.X + (int)Height, (int)Width).ToList();
             List<int> leftSide = Enumerable.Range((int)Position.Y, (int)Height).ToList();
 
             sides.Add(Side.Top, topSide);
             sides.Add(Side.Right, rightSide);
             sides.Add(Side.Bottom, bottomSide);
             sides.Add(Side.Left, leftSide);
+            Console.WriteLine("brickBot-> " +string.Join(",", sides[Side.Bottom]));
+
         }
     }
     public enum Side

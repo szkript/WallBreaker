@@ -41,7 +41,7 @@ namespace Pong
                     Canvas.SetTop(brick.brick, position.Y);
                     bricks.Add(brick);
                     PongCanvas.Children.Add(brick.brick);
-                    posLeft += brick.Width + 5;
+                    posLeft += brick.brick.Width + 5;
                 }
                 posTop += 30;
             }
@@ -231,6 +231,9 @@ namespace Pong
                     removeAble = brick;
                 }
             }
+
+            if (bricks.Count == 0) { gameWon(); }
+
             if (removeAble != null)
             {
                 bricks.Remove(removeAble);
@@ -243,9 +246,6 @@ namespace Pong
                 PongCanvas.Children.Add(Paddle);
                 PongCanvas.Children.Add(Ball);
             }
-
-            if (bricks.Count == 0) { gameWon(); }
-
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
