@@ -17,7 +17,7 @@ namespace Pong
         private bool paused { set; get; } = false;
         private int score;
 
-        private int startingBallSpeed = 3;
+        private int startingBallSpeed = 1;
         private int rowOfBricks = 2;
         public ObservableCollection<Brick> bricks { get; set; }
 
@@ -45,6 +45,7 @@ namespace Pong
                 }
                 posTop += 30;
             }
+            Console.WriteLine("postop " + posTop);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -158,7 +159,9 @@ namespace Pong
         {
             score = 0;
             InitBricks(rowOfBricks);
-            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed);
+            int ballStartingVerticalPosition = rowOfBricks * 40;
+            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);
+            
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);

@@ -16,12 +16,13 @@ namespace Pong
         private double canvasWidth;
         private double canvasHeight;
 
-        public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int ballStartingSpeed)
+        public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int ballStartingSpeed, int startingHeightPosition)
         {
             this.ball = ball;
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
-            position = new Vector2((float)canvasWidth / 2, (float)canvasHeight / 2 - 100);
+            position = new Vector2((float)canvasWidth / 2, startingHeightPosition);
+            Console.WriteLine("ballYstart " + startingHeightPosition);
             ball.SetValue(Canvas.LeftProperty, (double)position.X);
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
             Random random = new Random();
@@ -94,20 +95,27 @@ namespace Pong
             }
         }
 
-        public bool ContactsWith(Brick rectangle)
+        public bool ContactsWith(Brick brick)
         {
-            if (BallInRange(rectangle))
+            if (BallInRange(brick))
             {
                 List<int> ballTop = Enumerable.Range((int)position.X, (int)ball.Width).ToList();
 
-                if (ballTop.Any(x => rectangle.sides[Side.Bottom].Contains(x)))
+                if (ballTop.Any(ballPosition => brick.sides[Side.Bottom].Contains(ballPosition)))
                 {
+                    //InverseDirection();
                     direction.Y = Math.Abs(direction.Y);
                     return true;
                 }
             }
             return false;
         }
+
+        private void InverseDirection()
+        {
+            throw new NotImplementedException();
+        }
+
         private bool BallInRange(Brick brick)
         { 
             if ((int)position.Y <= brick.sides[Side.Left].Last()
