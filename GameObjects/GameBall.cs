@@ -96,17 +96,12 @@ namespace Pong
 
         public bool ContactsWith(Brick rectangle)
         {
-            int ballX1 = Convert.ToInt32(ball.GetValue(Canvas.LeftProperty));
             if (BallInRange(rectangle))
             {
-                List<int> ballTop = Enumerable.Range((int)ballX1, (int)ball.Width).ToList();
+                List<int> ballTop = Enumerable.Range((int)position.X, (int)ball.Width).ToList();
 
                 if (ballTop.Any(x => rectangle.sides[Side.Bottom].Contains(x)))
                 {
-                    Console.WriteLine("brickBotY1-> " + rectangle.sides[Side.Left].First());
-                    Console.WriteLine("brickBotY2-> " + rectangle.sides[Side.Left].Last());
-                    Console.WriteLine($"brickY2 pos-> {rectangle.Position.Y + rectangle.brick.Height}");
-                    Console.WriteLine("---------------------------------------");
                     direction.Y = Math.Abs(direction.Y);
                     return true;
                 }
@@ -116,11 +111,7 @@ namespace Pong
         private bool BallInRange(Brick brick)
         {
             int yRange = 3;
-            int ballY1 = Convert.ToInt32(ball.GetValue(Canvas.TopProperty));
-            Console.WriteLine("ball " + ballY1);
-            Console.WriteLine("ball " + (int)position.Y);
-            Console.WriteLine("brick " + brick.Position.Y);
-            Console.WriteLine("brickBySide " + brick.sides[Side.Left].Last());
+
             if ((int)position.Y <= brick.sides[Side.Left].Last() + yRange
                 && (int)position.Y >= brick.sides[Side.Left].First() - yRange)
             {
