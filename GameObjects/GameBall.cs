@@ -29,10 +29,10 @@ namespace WallBreaker
             int randomDirY = 0 + random.Next(0, 201);
             direction = new Vector2(randomDirX, randomDirY);
             direction = Vector2.Normalize(direction);
-            speedMultiplier(ballStartingSpeed);
+            SpeedMultiplier(ballStartingSpeed);
         }
 
-        public void move()
+        public void Move()
         {
             if (position.X <= 0)
             {
@@ -54,7 +54,7 @@ namespace WallBreaker
             ball.SetValue(Canvas.LeftProperty, (double)position.X);
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
         }
-        internal void inverse(Rectangle paddle)
+        internal void Inverse(Rectangle paddle)
         {
             velocity.Y = Math.Abs(velocity.Y);
             velocity.X = Math.Abs(velocity.X);
@@ -66,7 +66,7 @@ namespace WallBreaker
             position += direction * velocity;
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
         }
-        internal void speedUp()
+        internal void SpeedUp()
         {
             if (velocity.X > 0)
             {
@@ -85,11 +85,11 @@ namespace WallBreaker
                 velocity.Y -= 1;
             }
         }
-        private void speedMultiplier(int speedUpXTimes)
+        private void SpeedMultiplier(int speedUpXTimes)
         {
             for (int i = 0; i < speedUpXTimes; i++)
             {
-                speedUp();
+                SpeedUp();
             }
         }
 

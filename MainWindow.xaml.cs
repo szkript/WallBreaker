@@ -14,21 +14,21 @@ namespace WallBreaker
         private GameBall ball;
         private DispatcherTimer _timer;
         private DispatcherTimer _gameloopTimer;
-        private bool paused { set; get; } = false;
+        private bool Paused { set; get; } = false;
         private int score;
 
         private int startingBallSpeed = 3;
         private int rowOfBricks = 5;
-        public ObservableCollection<Brick> bricks { get; set; }
+        public ObservableCollection<Brick> Bricks { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            bricks = new ObservableCollection<Brick>();
+            Bricks = new ObservableCollection<Brick>();
         }
         private void InitBricks(int NumOfRows)
         {
-            bricks.Clear();
+            Bricks.Clear();
             double posTop = 20;
             for (int i = 0; i < NumOfRows; i++)
             {
@@ -39,7 +39,7 @@ namespace WallBreaker
                     Brick brick = new Brick(position);
                     Canvas.SetLeft(brick.brick, position.X);
                     Canvas.SetTop(brick.brick, position.Y);
-                    bricks.Add(brick);
+                    Bricks.Add(brick);
                     PongCanvas.Children.Add(brick.brick);
                     posLeft += brick.brick.Width + 5;
                 }
@@ -51,7 +51,7 @@ namespace WallBreaker
         {
             if (e.Key == Key.Escape)
             {
-                exitGame();
+                ExitGame();
             }
             switch (e.Key)
             {
@@ -62,88 +62,88 @@ namespace WallBreaker
                     paddle.MoveRight = true;
                     break;
                 case Key.Space:
-                    togglePause(GameState.SimplePause);
+                    TogglePause(GameState.SimplePause);
                     break;
             }
         }
 
-        private void exitGame()
+        private void ExitGame()
         {
-            togglePause(GameState.Exit);
+            TogglePause(GameState.Exit);
         }
 
-        private void togglePause()
+        private void TogglePause()
         {
-            if (paused == false)
+            if (Paused == false)
             {
-                paused = true;
+                Paused = true;
                 MessageBox.Show("Your Score :" + score);
-                paused = false;
+                Paused = false;
             }
-            else if (paused == true)
+            else if (Paused == true)
             {
-                paused = false;
+                Paused = false;
             }
         }
 
-        private void togglePause(GameState pauseState)
+        private void TogglePause(GameState pauseState)
         {
             switch (pauseState)
             {
                 case GameState.Exit:
-                    paused = true;
+                    Paused = true;
                     ExitPopupWindow exitWindow = new ExitPopupWindow();
                     exitWindow.ShowDialog();
-                    paused = false;
+                    Paused = false;
                     if (exitWindow.exitConfirmed())
                     {
                         Close();
                     }
                     if (exitWindow.restartGame())
                     {
-                        stopGame();
-                        startGame();
+                        StopGame();
+                        StartGame();
                     }
                     break;
                 case GameState.SimplePause:
-                    togglePause();
+                    TogglePause();
                     break;
                 case GameState.GameOver:
-                    paused = true;
+                    Paused = true;
                     Game_overWindow gameOver = new Game_overWindow(GameState.GameOver, score);
                     gameOver.ShowDialog();
-                    paused = false;
+                    Paused = false;
                     if (gameOver.exitConfirmed())
                     {
-                        stopGame();
+                        StopGame();
                         Close();
                     }
                     if (gameOver.restartGame())
                     {
-                        stopGame();
-                        startGame();
+                        StopGame();
+                        StartGame();
                     }
                     break;
                 case GameState.Win:
-                    paused = true;
+                    Paused = true;
                     Game_overWindow game_Over = new Game_overWindow(GameState.Win, score);
                     game_Over.ShowDialog();
-                    paused = false;
+                    Paused = false;
                     if (game_Over.exitConfirmed())
                     {
-                        stopGame();
+                        StopGame();
                         Close();
                     }
                     if (game_Over.restartGame())
                     {
-                        stopGame();
-                        startGame();
+                        StopGame();
+                        StartGame();
                     }
                     break;
             }
         }
 
-        private void stopGame()
+        private void StopGame()
         {
             _timer.Stop();
             _gameloopTimer.Stop();
@@ -151,10 +151,10 @@ namespace WallBreaker
 
         private void PongCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            startGame();
+            StartGame();
         }
 
-        private void startGame()
+        private void StartGame()
         {
             score = 0;
             InitBricks(rowOfBricks);
@@ -164,18 +164,18 @@ namespace WallBreaker
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);
-            _timer.Tick += new EventHandler(dispatcherTimer_Tick);
+            _timer.Tick += new EventHandler(DispatcherTimer_Tick);
             _timer.Start();
             _gameloopTimer = new DispatcherTimer();
 
             _gameloopTimer.Interval = new TimeSpan(0, 0, 0, 0, 8);
-            _gameloopTimer.Tick += new EventHandler(gameLoop);
+            _gameloopTimer.Tick += new EventHandler(GameLoop);
             _gameloopTimer.Start();
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (!paused)
+            if (!Paused)
             {
                 Mouse.OverrideCursor = Cursors.None;
             }
@@ -185,27 +185,27 @@ namespace WallBreaker
             }
         }
 
-        private void gameWon()
+        private void GameWon()
         {
-            togglePause(GameState.Win);
+            TogglePause(GameState.Win);
         }
 
-        private void gameLoop(object sender, EventArgs e)
+        private void GameLoop(object sender, EventArgs e)
         {
-            if (paused) { return; }
+            if (Paused) { return; }
 
-            checkCollusion();
-            ball.move();
+            CheckCollusion();
+            ball.Move();
             paddle.movePaddle();
-            updateLiveScore();
+            UpdateLiveScore();
         }
 
-        private void updateLiveScore()
+        private void UpdateLiveScore()
         {
             Score.Content = "score: " + score;
         }
 
-        private void checkCollusion()
+        private void CheckCollusion()
         {
             double paddlePosHorizontal = (double)Paddle.GetValue(Canvas.LeftProperty);
             double paddlePosVertical = (double)Paddle.GetValue(Canvas.TopProperty);
@@ -216,16 +216,16 @@ namespace WallBreaker
             {
                 if (paddlePosHorizontal <= goloPosHorizontal + Ball.ActualWidth && paddlePosHorizontal + Paddle.ActualWidth >= goloPosHorizontal)
                 {
-                    ball.inverse(Paddle);
+                    ball.Inverse(Paddle);
                 }
             }
             if (paddlePosVertical <= goloPosVertical)
             {
-                togglePause(GameState.GameOver);
+                TogglePause(GameState.GameOver);
             }
 
             Brick removeAble = null;
-            foreach (Brick brick in bricks)
+            foreach (Brick brick in Bricks)
             {
                 if (ball.ContactsWith(brick))
                 {
@@ -234,13 +234,13 @@ namespace WallBreaker
                 }
             }
 
-            if (bricks.Count == 0) { gameWon(); }
+            if (Bricks.Count == 0) { GameWon(); }
 
             if (removeAble != null)
             {
-                bricks.Remove(removeAble);
+                Bricks.Remove(removeAble);
                 PongCanvas.Children.Clear();
-                foreach (Brick brick in bricks)
+                foreach (Brick brick in Bricks)
                 {
                     PongCanvas.Children.Add(brick.brick);
                 }
