@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Pong
+namespace WallBreaker
 {
     /// <summary>
     /// Interaction logic for Game_overWindow.xaml

@@ -1,4 +1,4 @@
-﻿namespace Pong
+﻿namespace WallBreaker
 {
     using System;
     using System.Collections.Generic;

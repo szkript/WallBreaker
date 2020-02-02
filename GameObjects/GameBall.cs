@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
-namespace Pong
+namespace WallBreaker
 {
     class GameBall
     {

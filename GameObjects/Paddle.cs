@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Shapes;
 
-namespace Pong
+namespace WallBreaker
 {
     class Paddle
     {

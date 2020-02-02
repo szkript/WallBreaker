@@ -6,7 +6,7 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
-namespace Pong
+namespace WallBreaker
 {
     public partial class MainWindow : Window
     {
