@@ -96,29 +96,37 @@ namespace Pong
 
         public bool ContactsWith(Brick rectangle)
         {
-            bool result = false;
-            //horizontal
             int ballX1 = Convert.ToInt32(ball.GetValue(Canvas.LeftProperty));
-            //vertical
-            int ballY1 = Convert.ToInt32(ball.GetValue(Canvas.TopProperty));
-            List<int> ballTop = Enumerable.Range((int)ballX1, (int)ball.Width).ToList();
-
-            if (ballY1 <= rectangle.Position.Y + rectangle.sides[Side.Left].Last() 
-                && ballY1 <= rectangle.sides[Side.Left].First())
+            if (BallInRange(rectangle))
             {
+                List<int> ballTop = Enumerable.Range((int)ballX1, (int)ball.Width).ToList();
+
                 if (ballTop.Any(x => rectangle.sides[Side.Bottom].Contains(x)))
                 {
                     Console.WriteLine("brickBotY1-> " + rectangle.sides[Side.Left].First());
                     Console.WriteLine("brickBotY2-> " + rectangle.sides[Side.Left].Last());
-                    Console.WriteLine($"brickY2 pos->{rectangle.Position.Y + rectangle.brick.Height}");
-                    Console.WriteLine("ballY1 -> " + ballY1);
-                    Console.WriteLine($"ballY2 -> {ballY1 + ball.ActualWidth}");
+                    Console.WriteLine($"brickY2 pos-> {rectangle.Position.Y + rectangle.brick.Height}");
+                    Console.WriteLine("---------------------------------------");
                     direction.Y = Math.Abs(direction.Y);
                     return true;
                 }
-
             }
-            return result;
+            return false;
+        }
+        private bool BallInRange(Brick brick)
+        {
+            int yRange = 3;
+            int ballY1 = Convert.ToInt32(ball.GetValue(Canvas.TopProperty));
+            Console.WriteLine("ball " + ballY1);
+            Console.WriteLine("ball " + (int)position.Y);
+            Console.WriteLine("brick " + brick.Position.Y);
+            Console.WriteLine("brickBySide " + brick.sides[Side.Left].Last());
+            if ((int)position.Y <= brick.sides[Side.Left].Last() + yRange
+                && (int)position.Y >= brick.sides[Side.Left].First() - yRange)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
