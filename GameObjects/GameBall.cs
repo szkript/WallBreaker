@@ -95,6 +95,8 @@ namespace WallBreaker
 
         public bool ContactsWith(Brick brick)
         {
+            // TODO: collusion must be more accurate
+            // TODO: dynammically check all side and make inversion based on side
             if (BallInRange(brick))
             {
                 List<int> ballTop = Enumerable.Range((int)position.X, (int)ball.Width).ToList();
