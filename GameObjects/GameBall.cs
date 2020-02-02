@@ -55,7 +55,6 @@ namespace Pong
             ball.SetValue(Canvas.LeftProperty, (double)position.X);
             ball.SetValue(Canvas.TopProperty, (double)position.Y);
         }
-
         internal void inverse(Rectangle paddle)
         {
             velocity.Y = Math.Abs(velocity.Y);
@@ -103,8 +102,7 @@ namespace Pong
 
                 if (ballTop.Any(ballPosition => brick.sides[Side.Bottom].Contains(ballPosition)))
                 {
-                    //InverseDirection();
-                    direction.Y = Math.Abs(direction.Y);
+                    InverseDirection();
                     return true;
                 }
             }
@@ -113,7 +111,7 @@ namespace Pong
 
         private void InverseDirection()
         {
-            throw new NotImplementedException();
+            direction.Y = direction.Y > direction.Y + 1 ? direction.Y : -direction.Y;
         }
 
         private bool BallInRange(Brick brick)
