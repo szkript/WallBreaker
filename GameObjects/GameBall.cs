@@ -102,20 +102,30 @@ namespace Pong
 
                 if (ballTop.Any(ballPosition => brick.sides[Side.Bottom].Contains(ballPosition)))
                 {
-                    InverseDirection();
+                    InverseDirection(Axis.Y);
                     return true;
                 }
             }
             return false;
         }
 
-        private void InverseDirection()
+        private void InverseDirection(Axis axis)
         {
-            direction.Y = direction.Y > direction.Y + 1 ? direction.Y : -direction.Y;
+            switch (axis)
+            {
+                case Axis.X:
+                    direction.X = direction.X > direction.X + 1 ? direction.X : -direction.X;
+                    break;
+                case Axis.Y:
+                    direction.Y = direction.Y > direction.Y + 1 ? direction.Y : -direction.Y;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private bool BallInRange(Brick brick)
-        { 
+        {
             if ((int)position.Y <= brick.sides[Side.Left].Last()
                 && (int)position.Y >= brick.sides[Side.Left].First())
             {
@@ -123,5 +133,10 @@ namespace Pong
             }
             return false;
         }
+    }
+    public enum Axis
+    {
+        X,
+        Y
     }
 }
