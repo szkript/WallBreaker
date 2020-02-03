@@ -160,15 +160,16 @@ namespace WallBreaker
             score = 0;
             InitBricks(rowOfBricks);
             int ballStartingVerticalPosition = rowOfBricks * 40;
-            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);
-            
+            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);            
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
+
             _timer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1)
             };
             _timer.Tick += new EventHandler(DispatcherTimer_Tick);
             _timer.Start();
+
             _gameloopTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 8)
