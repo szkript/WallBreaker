@@ -18,8 +18,8 @@ namespace WallBreaker
         private bool Paused { set; get; } = false;
         private int score;
 
-        private int startingBallSpeed = 3;
-        private int rowOfBricks = 5;
+        private readonly int startingBallSpeed = 3;
+        private readonly int rowOfBricks = 5;
         public ObservableCollection<Brick> Bricks { get; set; }
 
         public MainWindow()
@@ -163,13 +163,16 @@ namespace WallBreaker
             ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);
             
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
-            _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0, 0, 1);
+            _timer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 1)
+            };
             _timer.Tick += new EventHandler(DispatcherTimer_Tick);
             _timer.Start();
-            _gameloopTimer = new DispatcherTimer();
-
-            _gameloopTimer.Interval = new TimeSpan(0, 0, 0, 0, 8);
+            _gameloopTimer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 8)
+            };
             _gameloopTimer.Tick += new EventHandler(GameLoop);
             _gameloopTimer.Start();
         }

@@ -17,12 +17,14 @@
 
         public Brick(Vector2 position)
         {
-            Rectangle rect = new Rectangle();
-            rect.Name = "Brick";
-            rect.Stroke = Brushes.Red;
-            rect.Fill = Brushes.Black;
-            rect.Width = Width;
-            rect.Height = Height;
+            Rectangle rect = new Rectangle
+            {
+                Name = "Brick",
+                Stroke = Brushes.Red,
+                Fill = Brushes.Black,
+                Width = Width,
+                Height = Height
+            };
             brick = rect;
             Position = position;
             CalculateSides();
