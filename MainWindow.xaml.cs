@@ -8,7 +8,7 @@ using System.Numerics;
 
 namespace WallBreaker
 {
-    // TODO: Make it work in MvvM pattern
+    // TODO: Make it work in MvvM || MVC pattern
     public partial class MainWindow : Window
     {
         private Paddle paddle;
@@ -16,11 +16,12 @@ namespace WallBreaker
         private DispatcherTimer _timer;
         private DispatcherTimer _gameloopTimer;
         private bool Paused { set; get; } = false;
+        internal ObservableCollection<Brick> Bricks { get; set; }
+
         private int score;
 
-        private readonly int startingBallSpeed = 3;
-        private readonly int rowOfBricks = 5;
-        public ObservableCollection<Brick> Bricks { get; set; }
+        private readonly int startingBallSpeed = 1;
+        private readonly int rowOfBricks = 4;
 
         public MainWindow()
         {

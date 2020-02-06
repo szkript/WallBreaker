@@ -4,55 +4,58 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using WallBreaker.GameObjects;
 
 namespace WallBreaker
 {
-    class GameBall
+    class GameBall : GameObject
     {
         private Rectangle ball;
-        private Vector2 position;
-        private Vector2 velocity = new Vector2(5, 5);
+        private Vector2 velocity;
         private Vector2 direction;
         private double canvasWidth;
         private double canvasHeight;
 
         public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int ballStartingSpeed, int startingHeightPosition)
         {
+            velocity = new Vector2(ballStartingSpeed, ballStartingSpeed);
             this.ball = ball;
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
-            position = new Vector2((float)canvasWidth / 2, startingHeightPosition);
-            ball.SetValue(Canvas.LeftProperty, (double)position.X);
-            ball.SetValue(Canvas.TopProperty, (double)position.Y);
+            Position = new Vector2((float)canvasWidth / 2, startingHeightPosition);
+            ball.SetValue(Canvas.LeftProperty, (double)Position.X);
+            ball.SetValue(Canvas.TopProperty, (double)Position.Y);
             Random random = new Random();
             int randomDirX = -100 + random.Next(0, 201);
             int randomDirY = 0 + random.Next(0, 201);
             direction = new Vector2(randomDirX, randomDirY);
             direction = Vector2.Normalize(direction);
-            SpeedMultiplier(ballStartingSpeed);
+            Width = ball.ActualWidth;
+            Height = ball.ActualHeight;
+            //SpeedMultiplier(ballStartingSpeed);
         }
 
         public void Move()
         {
-            if (position.X <= 0)
+            if (Position.X <= 0)
             {
                 velocity.X = -velocity.X;
             }
-            if (position.X >= (canvasWidth - (ball.Width + 5)))
+            if (Position.X >= (canvasWidth - (ball.Width + 5)))
             {
                 velocity.X = -velocity.X;
             }
-            if (position.Y <= 0)
+            if (Position.Y <= 0)
             {
                 velocity.Y = -velocity.Y;
             }
-            if (position.Y >= (canvasHeight - ball.Height))
+            if (Position.Y >= (canvasHeight - ball.Height))
             {
                 velocity.Y = -velocity.Y;
             }
-            position += direction * velocity;
-            ball.SetValue(Canvas.LeftProperty, (double)position.X);
-            ball.SetValue(Canvas.TopProperty, (double)position.Y);
+            Position += direction * velocity;
+            ball.SetValue(Canvas.LeftProperty, (double)Position.X);
+            ball.SetValue(Canvas.TopProperty, (double)Position.Y);
         }
         internal void Inverse(Rectangle paddle)
         {
@@ -63,8 +66,8 @@ namespace WallBreaker
             double positionDifference = ballMiddlePos - paddleMiddlePos;
             direction = new Vector2((1 * (float)positionDifference), ((float)-Math.Abs(1000 / positionDifference)));
             direction = Vector2.Normalize(direction);
-            position += direction * velocity;
-            ball.SetValue(Canvas.TopProperty, (double)position.Y);
+            Position += direction * velocity;
+            ball.SetValue(Canvas.TopProperty, (double)Position.Y);
         }
         internal void SpeedUp()
         {
@@ -97,9 +100,10 @@ namespace WallBreaker
         {
             // TODO: collusion must be more accurate
             // TODO: dynammically check all side and make inversion based on side
+            //Dictionary<Side, List<int>> ballSides;
             if (BallInRange(brick))
             {
-                List<int> ballTop = Enumerable.Range((int)position.X, (int)ball.Width).ToList();
+                List<int> ballTop = Enumerable.Range((int)Position.X, (int)ball.Width).ToList();
 
                 if (ballTop.Any(ballPosition => brick.sides[Side.Bottom].Contains(ballPosition)))
                 {
@@ -127,17 +131,14 @@ namespace WallBreaker
 
         private bool BallInRange(Brick brick)
         {
-            if ((int)position.Y <= brick.sides[Side.Left].Last()
-                && (int)position.Y >= brick.sides[Side.Left].First())
+            Console.WriteLine($"{brick.Position.Y}, ball y: {Position.Y}");
+            if ((int)Position.Y <= brick.sides[Side.Left].Last()
+                && (int)Position.Y >= brick.sides[Side.Left].First())
             {
                 return true;
             }
             return false;
         }
     }
-    public enum Axis
-    {
-        X,
-        Y
-    }
+
 }

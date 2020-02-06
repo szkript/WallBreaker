@@ -79,6 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GameObjects\Brick.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="Windows\ExitPopupWindow.xaml.cs">
       <DependentUpon>ExitPopupWindow.xaml</DependentUpon>
     </Compile>

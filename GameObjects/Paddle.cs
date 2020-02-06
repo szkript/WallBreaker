@@ -1,9 +1,10 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Shapes;
+using WallBreaker.GameObjects;
 
 namespace WallBreaker
 {
-    class Paddle
+    class Paddle : GameObject
     {
         private Rectangle paddle;
         private int speed;
@@ -16,6 +17,8 @@ namespace WallBreaker
             this.paddle = paddle;
             speed = 8;
             this.canvasWidth = canvasWidth;
+            Width = paddle.ActualWidth;
+            Height = paddle.ActualHeight;
             paddle.SetValue(Canvas.LeftProperty, (canvasWidth / 2) - (paddle.ActualWidth / 2));
 
         }
