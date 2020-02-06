@@ -18,7 +18,7 @@ namespace WallBreaker.GameObjects
         {
 
         }
-        internal void CalculateSides()
+        public void CalculateSides()
         {
             List<int> topSide = Enumerable.Range((int)Position.X, (int)Width + 1).ToList();
             List<int> rightSide = Enumerable.Range((int)Position.Y + (int)Width + 1, (int)Height).ToList();
@@ -30,6 +30,22 @@ namespace WallBreaker.GameObjects
             sides.Add(Side.Bottom, bottomSide);
             sides.Add(Side.Left, leftSide);
 
+        }
+        public Side GetOppositeSide(Side side)
+        {
+            switch (side)
+            {
+                case Side.Top:
+                    return Side.Bottom;
+                case Side.Right:
+                    return Side.Left;
+                case Side.Bottom:
+                    return Side.Top;
+                case Side.Left:
+                   return Side.Right;
+                default:
+                    return side;
+            }
         }
     }
     public enum Axis

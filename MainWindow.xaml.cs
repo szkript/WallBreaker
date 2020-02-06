@@ -162,7 +162,7 @@ namespace WallBreaker
         {
             score = 0;
             InitBricks(rowOfBricks);
-            int ballStartingVerticalPosition = rowOfBricks * 40;
+            int ballStartingVerticalPosition = rowOfBricks * 37;
             ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
 
@@ -239,6 +239,7 @@ namespace WallBreaker
                 {
                     score += 100;
                     removeAble = brick;
+                    break;
                 }
             }
 

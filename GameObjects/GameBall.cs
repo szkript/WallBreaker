@@ -60,6 +60,28 @@ namespace WallBreaker
             ball.SetValue(Canvas.LeftProperty, (double)Position.X);
             ball.SetValue(Canvas.TopProperty, (double)Position.Y);
         }
+        public Vector2 PeekingMove()
+        {
+            Vector2 fake = new Vector2(velocity.X, velocity.Y);
+            if (Position.X <= 0)
+            {
+                fake.X = -velocity.X;
+            }
+            if (Position.X >= (canvasWidth - (ball.Width + 5)))
+            {
+                fake.X = -velocity.X;
+            }
+            if (Position.Y <= 0)
+            {
+                fake.Y = -velocity.Y;
+            }
+            if (Position.Y >= (canvasHeight - ball.Height))
+            {
+                fake.Y = -velocity.Y;
+            }
+            return Position + (direction * fake);
+            //return fake;
+        }
         internal void Inverse(Rectangle paddle)
         {
             velocity.Y = Math.Abs(velocity.Y);
@@ -95,6 +117,7 @@ namespace WallBreaker
         }
         public void SpeedDown(int speed)
         {
+            // input is minus value
             if (velocity.X > 0)
             {
                 velocity.X += speed;
@@ -118,16 +141,32 @@ namespace WallBreaker
         {
             // TODO: collusion must be more accurate
             // TODO: dynammically check all side and make inversion based on side
-            //Dictionary<Side, List<int>> ballSides;
             if (BallInRange(brick))
             {
-                List<int> ballTop = Enumerable.Range((int)Position.X, (int)ball.Width).ToList();
-
-                if (ballTop.Any(ballPosition => brick.sides[Side.Bottom].Contains(ballPosition)))
+                foreach (Side side in Enum.GetValues(typeof(Side)))
                 {
-                    InverseDirection(Axis.Y);
-                    return true;
+                    this.sides.Clear();
+                    this.CalculateSides();
+                    foreach (var ballSide in this.sides)
+                    {
+                        Side opposite = GetOppositeSide(ballSide.Key);
+                        if (ballSide.Value.Any(val => brick.sides[opposite].Contains(val)))
+                        {
+                            Console.WriteLine($"ball side -> {ballSide.Key}, brick side -> {opposite}");
+                            if (side == Side.Bottom || side == Side.Top)
+                            {
+                                InverseDirection(Axis.Y);
+                                return true;
+                            }
+                            if (side == Side.Left || side == Side.Right)
+                            {
+                                InverseDirection(Axis.X);
+                                return true;
+                            }
+                        }
+                    }
                 }
+
             }
             return false;
         }
@@ -149,12 +188,27 @@ namespace WallBreaker
 
         private bool BallInRange(Brick brick)
         {
-            Console.WriteLine($"{brick.Position.Y}, ball y: {Position.Y}");
-            if ((int)Position.Y <= brick.sides[Side.Left].Last()
-                && (int)Position.Y >= brick.sides[Side.Left].First())
+            this.sides.Clear();
+            this.CalculateSides();
+            Vector2 nextMove = PeekingMove();
+            Console.WriteLine($"X: {Position.X}, Y: {Position.Y}");
+            Console.WriteLine($"nextX: {nextMove.X}, nextY: {nextMove.Y}");
+            foreach (var brickSide in brick.sides)
             {
-                return true;
+
             }
+            //foreach (var ballSide in this.sides)
+            //{
+            //    Side opposite = GetOppositeSide(ballSide.Key);
+
+            //}
+
+            //if ((int)Position.Y <= brick.sides[Side.Left].Last()
+            //&& (int)Position.Y >= brick.sides[Side.Left].First())
+            //{
+            //    return true;
+            //}
+
             return false;
         }
     }
