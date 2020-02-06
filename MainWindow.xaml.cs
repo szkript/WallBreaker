@@ -19,7 +19,7 @@ namespace WallBreaker
         internal ObservableCollection<Brick> Bricks { get; set; }
 
         private int score;
-
+        private int NitroSpeed = 10;
         private readonly int startingBallSpeed = 1;
         private readonly int rowOfBricks = 4;
 
@@ -65,6 +65,9 @@ namespace WallBreaker
                     break;
                 case Key.Space:
                     TogglePause(GameState.SimplePause);
+                    break;
+                case Key.Up:
+                    ball.SpeedUp(NitroSpeed);
                     break;
             }
         }
@@ -161,7 +164,7 @@ namespace WallBreaker
             score = 0;
             InitBricks(rowOfBricks);
             int ballStartingVerticalPosition = rowOfBricks * 40;
-            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);            
+            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
 
             _timer = new DispatcherTimer
@@ -265,6 +268,9 @@ namespace WallBreaker
                     break;
                 case Key.Right:
                     paddle.MoveRight = false;
+                    break;
+                case Key.Up:
+                    ball.SpeedDown(-NitroSpeed);
                     break;
             }
         }

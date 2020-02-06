@@ -16,6 +16,8 @@ namespace WallBreaker
         private double canvasWidth;
         private double canvasHeight;
 
+        public bool NitroIsOn { get; internal set; }
+
         public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int ballStartingSpeed, int startingHeightPosition)
         {
             velocity = new Vector2(ballStartingSpeed, ballStartingSpeed);
@@ -32,7 +34,6 @@ namespace WallBreaker
             direction = Vector2.Normalize(direction);
             Width = ball.ActualWidth;
             Height = ball.ActualHeight;
-            //SpeedMultiplier(ballStartingSpeed);
         }
 
         public void Move()
@@ -69,31 +70,46 @@ namespace WallBreaker
             Position += direction * velocity;
             ball.SetValue(Canvas.TopProperty, (double)Position.Y);
         }
-        internal void SpeedUp()
+        public void SpeedUp(int speed)
         {
+            if (NitroIsOn) return;
             if (velocity.X > 0)
             {
-                velocity.X += 1;
+                velocity.X += speed;
             }
             else if (velocity.X < 0)
             {
-                velocity.X -= 1;
+                velocity.X -= speed;
             }
             if (velocity.Y > 0)
             {
-                velocity.Y += 1;
+                velocity.Y += speed;
             }
             else if (velocity.Y < 0)
             {
-                velocity.Y -= 1;
+                velocity.Y -= speed;
             }
+            NitroIsOn = true;
         }
-        private void SpeedMultiplier(int speedUpXTimes)
+        public void SpeedDown(int speed)
         {
-            for (int i = 0; i < speedUpXTimes; i++)
+            if (velocity.X > 0)
             {
-                SpeedUp();
+                velocity.X += speed;
             }
+            else if (velocity.X < 0)
+            {
+                velocity.X -= speed;
+            }
+            if (velocity.Y > 0)
+            {
+                velocity.Y += speed;
+            }
+            else if (velocity.Y < 0)
+            {
+                velocity.Y -= speed;
+            }
+            NitroIsOn = false;
         }
 
         public bool ContactsWith(Brick brick)
