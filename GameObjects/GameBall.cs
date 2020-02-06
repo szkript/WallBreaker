@@ -15,6 +15,8 @@ namespace WallBreaker
         private Vector2 direction;
         private double canvasWidth;
         private double canvasHeight;
+        public int NitroSpeed = 10;
+
 
         public bool NitroIsOn { get; internal set; }
 

@@ -19,7 +19,6 @@ namespace WallBreaker
         internal ObservableCollection<Brick> Bricks { get; set; }
 
         private int score;
-        private int NitroSpeed = 10;
         private readonly int startingBallSpeed = 1;
         private readonly int rowOfBricks = 4;
 
@@ -67,7 +66,7 @@ namespace WallBreaker
                     TogglePause(GameState.SimplePause);
                     break;
                 case Key.Up:
-                    ball.SpeedUp(NitroSpeed);
+                    ball.SpeedUp(ball.NitroSpeed);
                     break;
             }
         }
@@ -270,7 +269,7 @@ namespace WallBreaker
                     paddle.MoveRight = false;
                     break;
                 case Key.Up:
-                    ball.SpeedDown(-NitroSpeed);
+                    ball.SpeedDown(-ball.NitroSpeed);
                     break;
             }
         }
