@@ -145,8 +145,6 @@ namespace WallBreaker
             {
                 foreach (Side side in Enum.GetValues(typeof(Side)))
                 {
-                    this.sides.Clear();
-                    this.CalculateSides();
                     foreach (var ballSide in this.sides)
                     {
                         Side opposite = GetOppositeSide(ballSide.Key);
@@ -166,7 +164,6 @@ namespace WallBreaker
                         }
                     }
                 }
-
             }
             return false;
         }
