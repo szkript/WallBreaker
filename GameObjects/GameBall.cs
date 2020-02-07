@@ -191,22 +191,29 @@ namespace WallBreaker
             this.sides.Clear();
             this.CalculateSides();
             Vector2 nextMove = PeekingMove();
-            Console.WriteLine($"X: {Position.X}, Y: {Position.Y}");
-            Console.WriteLine($"nextX: {nextMove.X}, nextY: {nextMove.Y}");
-            foreach (var brickSide in brick.sides)
+
+            //Console.WriteLine("-----------------------------------------");
+            //Console.WriteLine($"X: {(int)Position.X}, Y: {(int)Position.Y}");
+            //Console.WriteLine($"nextX: {(int)nextMove.X}, nextY: {(int)nextMove.Y}");
+
+            if (brick.Position.Y <= nextMove.Y && nextMove.Y <= brick.Position.Y + Height)
             {
-
+                if (brick.Position.X <= nextMove.X && nextMove.X <= brick.Position.X + brick.Width)
+                {
+                    Console.WriteLine("bejössz te geci?");
+                    return true;
+                }
             }
-            //foreach (var ballSide in this.sides)
-            //{
-            //    Side opposite = GetOppositeSide(ballSide.Key);
 
-            //}
-
-            //if ((int)Position.Y <= brick.sides[Side.Left].Last()
-            //&& (int)Position.Y >= brick.sides[Side.Left].First())
+            ////check if Y in range
+            //if (brick.allocatedPosition.Any(Y => Y.ToList().Contains((int)nextMove.Y)))
             //{
-            //    return true;
+            //    // if Y in range Check for X
+            //    if(brick.allocatedPosition.Any(x => x.ToList().Contains((int)nextMove.X) && x[0] == (int)nextMove.Y))
+            //    {
+            //        Console.WriteLine("miééértvanbennevanatéglában???");
+            //    }
+
             //}
 
             return false;
