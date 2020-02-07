@@ -190,6 +190,7 @@ namespace WallBreaker
         {
             this.sides.Clear();
             this.CalculateSides();
+            // get next position without modifying actual move
             Vector2 nextMove = PeekingMove();
 
             //Console.WriteLine("-----------------------------------------");
@@ -200,22 +201,9 @@ namespace WallBreaker
             {
                 if (brick.Position.X <= nextMove.X && nextMove.X <= brick.Position.X + brick.Width)
                 {
-                    Console.WriteLine("bejössz te geci?");
                     return true;
                 }
             }
-
-            ////check if Y in range
-            //if (brick.allocatedPosition.Any(Y => Y.ToList().Contains((int)nextMove.Y)))
-            //{
-            //    // if Y in range Check for X
-            //    if(brick.allocatedPosition.Any(x => x.ToList().Contains((int)nextMove.X) && x[0] == (int)nextMove.Y))
-            //    {
-            //        Console.WriteLine("miééértvanbennevanatéglában???");
-            //    }
-
-            //}
-
             return false;
         }
     }
