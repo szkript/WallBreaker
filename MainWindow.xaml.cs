@@ -19,7 +19,7 @@ namespace WallBreaker
         internal ObservableCollection<Brick> Bricks { get; set; }
 
         private int score;
-        private readonly int startingBallSpeed = 1;
+        private readonly int startingBallSpeed = 4;
         private readonly int rowOfBricks = 4;
 
         public MainWindow()
@@ -46,30 +46,7 @@ namespace WallBreaker
                 }
                 posTop += 30;
             }
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                ExitGame();
-            }
-            switch (e.Key)
-            {
-                case Key.Left:
-                    paddle.MoveLeft = true;
-                    break;
-                case Key.Right:
-                    paddle.MoveRight = true;
-                    break;
-                case Key.Space:
-                    TogglePause(GameState.SimplePause);
-                    break;
-                case Key.Up:
-                    ball.SpeedUp(ball.NitroSpeed);
-                    break;
-            }
-        }
+        }       
 
         private void ExitGame()
         {
@@ -163,7 +140,7 @@ namespace WallBreaker
             score = 0;
             InitBricks(rowOfBricks);
             int ballStartingVerticalPosition = rowOfBricks * 37;
-            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, startingBallSpeed, ballStartingVerticalPosition);
+            ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, ballStartingVerticalPosition);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
 
             _timer = new DispatcherTimer
@@ -259,6 +236,31 @@ namespace WallBreaker
             }
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                ExitGame();
+            }
+            switch (e.Key)
+            {
+                case Key.Left:
+                    paddle.MoveLeft = true;
+                    break;
+                case Key.Right:
+                    paddle.MoveRight = true;
+                    break;
+                case Key.Space:
+                    TogglePause(GameState.SimplePause);
+                    break;
+                case Key.Up:
+                    ball.SpeedUp(ball.NitroSpeed);
+                    break;
+                case Key.Down:
+                    ball.SlowMotionOn();
+                    break;
+            }
+        }
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -271,6 +273,9 @@ namespace WallBreaker
                     break;
                 case Key.Up:
                     ball.SpeedDown(-ball.NitroSpeed);
+                    break;
+                case Key.Down:
+                    ball.SlowMotionOff();
                     break;
             }
         }

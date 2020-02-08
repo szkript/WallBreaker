@@ -15,13 +15,15 @@ namespace WallBreaker
         private double canvasWidth;
         private double canvasHeight;
         public int NitroSpeed = 10;
-
+        public int SlowMotionSpeed = 1;
+        public int BallBaseSpeed = 4;
 
         public bool NitroIsOn { get; internal set; }
+        public bool IsSlowMotionOn { get; private set; } = false;
 
-        public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int ballStartingSpeed, int startingHeightPosition)
+        public GameBall(Rectangle ball, double canvasWidth, double canvasHeight, int startingHeightPosition)
         {
-            velocity = new Vector2(ballStartingSpeed, ballStartingSpeed);
+            velocity = new Vector2(BallBaseSpeed, BallBaseSpeed);
             this.ball = ball;
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
@@ -79,7 +81,6 @@ namespace WallBreaker
                 fake.Y = -velocity.Y;
             }
             return Position + (direction * fake);
-            //return fake;
         }
         internal void Inverse(Rectangle paddle)
         {
@@ -95,6 +96,7 @@ namespace WallBreaker
         }
         public void SpeedUp(int speed)
         {
+
             if (NitroIsOn) return;
             if (velocity.X > 0)
             {
@@ -201,6 +203,30 @@ namespace WallBreaker
                 }
             }
             return false;
+        }
+
+        internal void SlowMotionOn()
+        {
+            if (IsSlowMotionOn)
+            {
+                return;
+            }
+            // set ball speed to 1 (SlowMotion)
+            velocity.X = velocity.X > 0 ? velocity.X -= (BallBaseSpeed - SlowMotionSpeed) : velocity.X += (BallBaseSpeed - SlowMotionSpeed);
+            velocity.Y = velocity.Y > 0 ? velocity.Y -= (BallBaseSpeed - SlowMotionSpeed) : velocity.Y += (BallBaseSpeed - SlowMotionSpeed);
+
+            IsSlowMotionOn = true;
+        }
+        internal void SlowMotionOff()
+        {
+            if (!IsSlowMotionOn) { return; }
+            if (IsSlowMotionOn)
+            {
+                IsSlowMotionOn = false;
+            }
+            // set back normal ball speed
+            velocity.X = velocity.X > 0 ? velocity.X -= -(BallBaseSpeed - SlowMotionSpeed) : velocity.X += -(BallBaseSpeed - SlowMotionSpeed);
+            velocity.Y = velocity.Y > 0 ? velocity.Y -= -(BallBaseSpeed - SlowMotionSpeed) : velocity.Y += -(BallBaseSpeed - SlowMotionSpeed);
         }
     }
 
