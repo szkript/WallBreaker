@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WallBreaker.GameObjects
 {
@@ -13,7 +10,7 @@ namespace WallBreaker.GameObjects
         public Vector2 Position;
         public Dictionary<Side, List<int>> sides = new Dictionary<Side, List<int>>();
         public double Width { get; set; }
-        public double Height { get; set; } 
+        public double Height { get; set; }
         public GameObject()
         {
 
@@ -42,7 +39,7 @@ namespace WallBreaker.GameObjects
                 case Side.Bottom:
                     return Side.Top;
                 case Side.Left:
-                   return Side.Right;
+                    return Side.Right;
                 default:
                     return side;
             }
