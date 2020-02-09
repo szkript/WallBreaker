@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WallBreaker.GameObjects;
 
 namespace WallBreaker
@@ -17,6 +18,7 @@ namespace WallBreaker
         public int NitroSpeed = 10;
         public int SlowMotionSpeed = 1;
         public int BallBaseSpeed = 4;
+        private DispatcherTimer _slowMotionTimer;
 
         public bool NitroIsOn { get; internal set; }
         public bool IsSlowMotionOn { get; private set; } = false;
@@ -98,6 +100,7 @@ namespace WallBreaker
         {
 
             if (NitroIsOn) return;
+
             if (velocity.X > 0)
             {
                 velocity.X += speed;
@@ -215,6 +218,11 @@ namespace WallBreaker
             velocity.X = velocity.X > 0 ? velocity.X -= (BallBaseSpeed - SlowMotionSpeed) : velocity.X += (BallBaseSpeed - SlowMotionSpeed);
             velocity.Y = velocity.Y > 0 ? velocity.Y -= (BallBaseSpeed - SlowMotionSpeed) : velocity.Y += (BallBaseSpeed - SlowMotionSpeed);
 
+            _slowMotionTimer = new DispatcherTimer();
+            _slowMotionTimer.Interval = TimeSpan.FromSeconds(1);
+            _slowMotionTimer.Tick += timer_Tick;
+            _slowMotionTimer.Start();
+
             IsSlowMotionOn = true;
         }
         internal void SlowMotionOff()
@@ -227,6 +235,12 @@ namespace WallBreaker
             // set back normal ball speed
             velocity.X = velocity.X > 0 ? velocity.X -= -(BallBaseSpeed - SlowMotionSpeed) : velocity.X += -(BallBaseSpeed - SlowMotionSpeed);
             velocity.Y = velocity.Y > 0 ? velocity.Y -= -(BallBaseSpeed - SlowMotionSpeed) : velocity.Y += -(BallBaseSpeed - SlowMotionSpeed);
+        }
+        void timer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("1 sec");
+            _slowMotionTimer.Stop();
+            SlowMotionOff();
         }
     }
 

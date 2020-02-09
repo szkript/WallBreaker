@@ -19,7 +19,6 @@ namespace WallBreaker
         internal ObservableCollection<Brick> Bricks { get; set; }
 
         private int score;
-        private readonly int startingBallSpeed = 4;
         private readonly int rowOfBricks = 4;
 
         public MainWindow()
@@ -156,6 +155,8 @@ namespace WallBreaker
             };
             _gameloopTimer.Tick += new EventHandler(GameLoop);
             _gameloopTimer.Start();
+
+
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
@@ -273,9 +274,6 @@ namespace WallBreaker
                     break;
                 case Key.Up:
                     ball.SpeedDown(-ball.NitroSpeed);
-                    break;
-                case Key.Down:
-                    ball.SlowMotionOff();
                     break;
             }
         }
