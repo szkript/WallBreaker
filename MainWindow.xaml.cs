@@ -20,6 +20,9 @@ namespace WallBreaker
 
         private int score;
         private readonly int rowOfBricks = 4;
+        private int slowMotionCooldownTime = 2;
+        private DispatcherTimer _slowMotionCooldownTimer;
+        private bool OnCooldown = false;
 
         public MainWindow()
         {
@@ -45,7 +48,7 @@ namespace WallBreaker
                 }
                 posTop += 30;
             }
-        }       
+        }
 
         private void ExitGame()
         {
@@ -258,7 +261,9 @@ namespace WallBreaker
                     ball.SpeedUp(ball.NitroSpeed);
                     break;
                 case Key.Down:
+                    if (OnCooldown) { return; }
                     ball.SlowMotionOn();
+                    SlowMotionCooldown();
                     break;
             }
         }
@@ -276,6 +281,20 @@ namespace WallBreaker
                     ball.SpeedDown(-ball.NitroSpeed);
                     break;
             }
+        }
+
+        void SlowMotionCooldown()
+        {
+            _slowMotionCooldownTimer = new DispatcherTimer();
+            _slowMotionCooldownTimer.Interval = TimeSpan.FromSeconds(slowMotionCooldownTime);
+            _slowMotionCooldownTimer.Tick += slowMotion_tick;
+            _slowMotionCooldownTimer.Start();
+            OnCooldown = true;
+        }
+        void slowMotion_tick(object sender, EventArgs e)
+        {
+            OnCooldown = false;
+            _slowMotionCooldownTimer.Stop();
         }
 
     }

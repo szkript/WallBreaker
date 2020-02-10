@@ -17,7 +17,7 @@ namespace WallBreaker
         private double canvasHeight;
         public int NitroSpeed = 10;
         public int SlowMotionSpeed = 1;
-        public int BallBaseSpeed = 4;
+        public int BallBaseSpeed = 6;
         private DispatcherTimer _slowMotionTimer;
 
         public bool NitroIsOn { get; internal set; }
@@ -43,8 +43,8 @@ namespace WallBreaker
 
         public void Move()
         {
-            if(Position.X <= 0 || Position.X >= (canvasWidth - (ball.Width+5))) { velocity.X = -velocity.X; }
-            if(Position.Y <= 0 || Position.Y >= (canvasWidth - (ball.Width+5))) { velocity.Y = -velocity.Y; }
+            if(Position.X < 0 || Position.X > (canvasWidth - (ball.Width+5))) { velocity.X = -velocity.X; }
+            if(Position.Y < 0 || Position.Y > (canvasWidth - (ball.Width+5))) { velocity.Y = -velocity.Y; }
   
             Position += direction * velocity;
             ball.SetValue(Canvas.LeftProperty, (double)Position.X);
@@ -209,7 +209,7 @@ namespace WallBreaker
         }
         void timer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("1 sec");
+            Console.WriteLine("0,25 sec");
             _slowMotionTimer.Stop();
             SlowMotionOff();
         }
