@@ -43,22 +43,9 @@ namespace WallBreaker
 
         public void Move()
         {
-            if (Position.X <= 0)
-            {
-                velocity.X = -velocity.X;
-            }
-            if (Position.X >= (canvasWidth - (ball.Width + 5)))
-            {
-                velocity.X = -velocity.X;
-            }
-            if (Position.Y <= 0)
-            {
-                velocity.Y = -velocity.Y;
-            }
-            if (Position.Y >= (canvasHeight - ball.Height))
-            {
-                velocity.Y = -velocity.Y;
-            }
+            if(Position.X <= 0 || Position.X >= (canvasWidth - (ball.Width+5))) { velocity.X = -velocity.X; }
+            if(Position.Y <= 0 || Position.Y >= (canvasWidth - (ball.Width+5))) { velocity.Y = -velocity.Y; }
+  
             Position += direction * velocity;
             ball.SetValue(Canvas.LeftProperty, (double)Position.X);
             ball.SetValue(Canvas.TopProperty, (double)Position.Y);
@@ -66,22 +53,10 @@ namespace WallBreaker
         public Vector2 PeekingMove()
         {
             Vector2 fake = new Vector2(velocity.X, velocity.Y);
-            if (Position.X <= 0)
-            {
-                fake.X = -velocity.X;
-            }
-            if (Position.X >= (canvasWidth - (ball.Width + 5)))
-            {
-                fake.X = -velocity.X;
-            }
-            if (Position.Y <= 0)
-            {
-                fake.Y = -velocity.Y;
-            }
-            if (Position.Y >= (canvasHeight - ball.Height))
-            {
-                fake.Y = -velocity.Y;
-            }
+
+            if (Position.X <= 0 || Position.X >= (canvasWidth - (ball.Width + 5))) { fake.X = -velocity.X; }
+            if (Position.Y <= 0 || Position.Y >= (canvasWidth - (ball.Width + 5))) { fake.Y = -velocity.Y; }
+
             return Position + (direction * fake);
         }
         internal void Inverse(Rectangle paddle)
@@ -194,10 +169,6 @@ namespace WallBreaker
             // get next position without modifying actual move
             Vector2 nextMove = PeekingMove();
 
-            //Console.WriteLine("-----------------------------------------");
-            //Console.WriteLine($"X: {(int)Position.X}, Y: {(int)Position.Y}");
-            //Console.WriteLine($"nextX: {(int)nextMove.X}, nextY: {(int)nextMove.Y}");
-
             if (brick.Position.Y <= nextMove.Y && nextMove.Y <= brick.Position.Y + Height)
             {
                 if (brick.Position.X <= nextMove.X && nextMove.X <= brick.Position.X + brick.Width)
@@ -219,7 +190,7 @@ namespace WallBreaker
             velocity.Y = velocity.Y > 0 ? velocity.Y -= (BallBaseSpeed - SlowMotionSpeed) : velocity.Y += (BallBaseSpeed - SlowMotionSpeed);
 
             _slowMotionTimer = new DispatcherTimer();
-            _slowMotionTimer.Interval = TimeSpan.FromSeconds(1);
+            _slowMotionTimer.Interval = TimeSpan.FromSeconds(0.25);
             _slowMotionTimer.Tick += timer_Tick;
             _slowMotionTimer.Start();
 
