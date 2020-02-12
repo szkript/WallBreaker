@@ -1,52 +1,42 @@
-﻿namespace Pong
+﻿namespace WallBreaker
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Numerics;
     using System.Windows.Media;
     using System.Windows.Shapes;
+    using WallBreaker.GameObjects;
 
-    public class Brick
+    public class Brick : GameObject
     {
-        private double Width { get; set; } = 50;
-        private double Height { get; set; } = 20;
         public Rectangle brick { get; set; }
-        public Vector2 Position;
-        public Dictionary<Side, List<int>> sides = new Dictionary<Side, List<int>>();
-
+        private const int Brick_Width = 50;
+        private const int Brick_Height = 20;
+        public readonly List<int[]> allocatedPosition = new List<int[]>();
         public Brick(Vector2 position)
         {
-            Rectangle rect = new Rectangle();
-            rect.Name = "Brick";
-            rect.Stroke = Brushes.Red;
-            rect.Fill = Brushes.Black;
-            rect.Width = Width;
-            rect.Height = Height;
+            Rectangle rect = new Rectangle
+            {
+                Name = "Brick",
+                Stroke = Brushes.Red,
+                Fill = Brushes.Black,
+                Width = Brick_Width,
+                Height = Brick_Height
+            };
+            Width = Brick_Width;
+            Height = Brick_Height;
             brick = rect;
             Position = position;
             CalculateSides();
-        }
+            AllocatePosition();
 
-        private void CalculateSides()
+        }
+        private void AllocatePosition()
         {
-            List<int> topSide = Enumerable.Range((int)Position.X, (int)Width+1).ToList();
-            List<int> rightSide = Enumerable.Range((int)Position.Y + (int)Width+1, (int)Height).ToList();
-            List<int> bottomSide = Enumerable.Range((int)Position.X + (int)Height+1, (int)Width).ToList();
-            List<int> leftSide = Enumerable.Range((int)Position.Y, (int)Height+1).ToList();
-
-            sides.Add(Side.Top, topSide);
-            sides.Add(Side.Right, rightSide);
-            sides.Add(Side.Bottom, bottomSide);
-            sides.Add(Side.Left, leftSide);
-
+            for (int i = (int)Position.Y; i <= Position.Y + Height; i++)
+            {
+                allocatedPosition.Add(Enumerable.Range((int)Position.X + i, (int)Width).ToArray());
+            }
         }
-    }
-    public enum Side
-    {
-        Top,
-        Right,
-        Bottom,
-        Left
     }
 }
