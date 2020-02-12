@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
-using System.Collections.ObjectModel;
-using System.Numerics;
 
 namespace WallBreaker
 {
@@ -14,7 +13,7 @@ namespace WallBreaker
         private Paddle paddle;
         private GameBall ball;
         private bool Paused { set; get; } = false;
-        internal ObservableCollection<Brick> Bricks { get; set; }
+        internal List<Brick> Bricks { get; set; }
 
         private int score;
         private readonly int rowOfBricks = 4;
@@ -24,11 +23,10 @@ namespace WallBreaker
         public MainWindow()
         {
             InitializeComponent();
-            Bricks = new ObservableCollection<Brick>();
         }
         private void InitBricks(int NumOfRows)
         {
-            Bricks.Clear();
+            Bricks = new List<Brick>();
             double posTop = 20;
             for (int i = 0; i < NumOfRows; i++)
             {
@@ -141,11 +139,11 @@ namespace WallBreaker
             ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, ballStartingVerticalPosition);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
 
-            GameTimeManager.GameTime(DispatcherTimer_Tick);           
+            GameTimeManager.GameTime(GameTime_Tick);
             GameTimeManager.StartGame(GameLoop);
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private void GameTime_Tick(object sender, EventArgs e)
         {
             if (!Paused)
             {

@@ -9,58 +9,59 @@ namespace WallBreaker
 {
     public static class GameTimeManager
     {
-        private static DispatcherTimer _gameloopTimer;
-        private static DispatcherTimer _slowMotionCooldownTimer;
-        private static DispatcherTimer _slowMotionTimer;
-        public static DispatcherTimer _timer;
+        private static DispatcherTimer gameloopTimer;
+        private static DispatcherTimer slowMotionCooldownTimer;
+        private static DispatcherTimer slowMotionTimer;
+        public static DispatcherTimer timer;
+        private static DispatcherTimer gameStartDelay;
 
         internal static void StartGame(Action<object, EventArgs> gameLoop)
         {
-            _gameloopTimer = new DispatcherTimer
+            gameloopTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 8)
             };
-            _gameloopTimer.Tick += new EventHandler(gameLoop);
-            _gameloopTimer.Start();
+            gameloopTimer.Tick += new EventHandler(gameLoop);
+            gameloopTimer.Start();
         }
         internal static void StopGame()
         {
-            _gameloopTimer.Stop();
+            gameloopTimer.Stop();
         }
 
         internal static void GameTime(Action<object, EventArgs> dispatcherTimer_Tick)
         {
-            _timer = new DispatcherTimer
+            timer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1)
             };
-            _timer.Tick += new EventHandler(dispatcherTimer_Tick);
-            _timer.Start();
+            timer.Tick += new EventHandler(dispatcherTimer_Tick);
+            timer.Start();
         }
 
         internal static void SlowMotionCooldownStart(int slowMotionCooldownTime, Action<object, EventArgs> slowMotion_tick)
         {
-            _slowMotionCooldownTimer = new DispatcherTimer();
-            _slowMotionCooldownTimer.Interval = TimeSpan.FromSeconds(slowMotionCooldownTime);
-            _slowMotionCooldownTimer.Tick += new EventHandler(slowMotion_tick);
-            _slowMotionCooldownTimer.Start();
+            slowMotionCooldownTimer = new DispatcherTimer();
+            slowMotionCooldownTimer.Interval = TimeSpan.FromSeconds(slowMotionCooldownTime);
+            slowMotionCooldownTimer.Tick += new EventHandler(slowMotion_tick);
+            slowMotionCooldownTimer.Start();
         }
         internal static void SlowMotionCoolDownStop()
         {
-            _slowMotionCooldownTimer.Stop();
+            slowMotionCooldownTimer.Stop();
         }
 
         internal static void SlowMotionTimeStart(Action<object, EventArgs> slowMotionTimer_Tick, double slowTimeAmmount)
         {
-            _slowMotionTimer = new DispatcherTimer();
-            _slowMotionTimer.Interval = TimeSpan.FromSeconds(slowTimeAmmount);
-            _slowMotionTimer.Tick += new EventHandler(slowMotionTimer_Tick);
-            _slowMotionTimer.Start();
+            slowMotionTimer = new DispatcherTimer();
+            slowMotionTimer.Interval = TimeSpan.FromSeconds(slowTimeAmmount);
+            slowMotionTimer.Tick += new EventHandler(slowMotionTimer_Tick);
+            slowMotionTimer.Start();
             Console.WriteLine($"{slowTimeAmmount} sec");
         }
         internal static void SlowMotionTimeStop() 
         {
-            _slowMotionTimer.Stop();
+            slowMotionTimer.Stop();
         }
 
     }

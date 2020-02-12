@@ -3,7 +3,6 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 using WallBreaker.GameObjects;
 
 namespace WallBreaker
@@ -43,9 +42,9 @@ namespace WallBreaker
 
         public void Move()
         {
-            if(Position.X < 0 || Position.X > (canvasWidth - (ball.Width+5))) { velocity.X = -velocity.X; }
-            if(Position.Y < 0 || Position.Y > (canvasWidth - (ball.Width+5))) { velocity.Y = -velocity.Y; }
-  
+            if (Position.X < 0 || Position.X > (canvasWidth - (ball.Width + 5))) { velocity.X = -velocity.X; }
+            if (Position.Y < 0 || Position.Y > (canvasWidth - (ball.Width + 5))) { velocity.Y = -velocity.Y; }
+
             Position += direction * velocity;
             ball.SetValue(Canvas.LeftProperty, (double)Position.X);
             ball.SetValue(Canvas.TopProperty, (double)Position.Y);
@@ -122,32 +121,13 @@ namespace WallBreaker
             // TODO: dynammically check all side and make inversion based on side
             if (BallInRange(brick))
             {
-                foreach (Side side in Enum.GetValues(typeof(Side)))
-                {
-                    foreach (var ballSide in this.sides)
-                    {
-                        Side opposite = GetOppositeSide(ballSide.Key);
-                        if (ballSide.Value.Any(val => brick.sides[opposite].Contains(val)))
-                        {
-                            Console.WriteLine($"ball side -> {ballSide.Key}, brick side -> {opposite}");
-                            if (side == Side.Bottom || side == Side.Top)
-                            {
-                                InverseDirection(Axis.Y);
-                                return true;
-                            }
-                            if (side == Side.Left || side == Side.Right)
-                            {
-                                InverseDirection(Axis.X);
-                                return true;
-                            }
-                        }
-                    }
-                }
+                InverseDirection(Axis.Y);
+                return true;
             }
             return false;
         }
 
-        private void InverseDirection(Axis axis)
+        public void InverseDirection(Axis axis)
         {
             switch (axis)
             {
