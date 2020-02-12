@@ -13,15 +13,12 @@ namespace WallBreaker
     {
         private Paddle paddle;
         private GameBall ball;
-        private DispatcherTimer _timer;
-        //private DispatcherTimer _gameloopTimer;
         private bool Paused { set; get; } = false;
         internal ObservableCollection<Brick> Bricks { get; set; }
 
         private int score;
         private readonly int rowOfBricks = 4;
         private int slowMotionCooldownTime = 2;
-        private DispatcherTimer _slowMotionCooldownTimer;
         private bool OnCooldown = false;
 
         public MainWindow()
@@ -128,7 +125,6 @@ namespace WallBreaker
 
         private void StopGame()
         {
-            //GameTimeManager._timer.Stop();
             GameTimeManager.StopGame();
         }
 
@@ -272,16 +268,13 @@ namespace WallBreaker
 
         void SlowMotionCooldown()
         {
-            _slowMotionCooldownTimer = new DispatcherTimer();
-            _slowMotionCooldownTimer.Interval = TimeSpan.FromSeconds(slowMotionCooldownTime);
-            _slowMotionCooldownTimer.Tick += slowMotion_tick;
-            _slowMotionCooldownTimer.Start();
+            GameTimeManager.SlowMotionCooldownStart(slowMotionCooldownTime, slowMotion_tick);
             OnCooldown = true;
         }
         void slowMotion_tick(object sender, EventArgs e)
         {
+            GameTimeManager.SlowMotionCoolDownStop();
             OnCooldown = false;
-            _slowMotionCooldownTimer.Stop();
         }
 
     }

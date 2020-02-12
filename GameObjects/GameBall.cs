@@ -18,7 +18,7 @@ namespace WallBreaker
         public int NitroSpeed = 10;
         public int SlowMotionSpeed = 1;
         public int BallBaseSpeed = 6;
-        private DispatcherTimer _slowMotionTimer;
+        private double SlowTimeAmmount = 0.25;
 
         public bool NitroIsOn { get; internal set; }
         public bool IsSlowMotionOn { get; private set; } = false;
@@ -185,15 +185,10 @@ namespace WallBreaker
             {
                 return;
             }
-            // set ball speed to 1 (SlowMotion)
             velocity.X = velocity.X > 0 ? velocity.X -= (BallBaseSpeed - SlowMotionSpeed) : velocity.X += (BallBaseSpeed - SlowMotionSpeed);
             velocity.Y = velocity.Y > 0 ? velocity.Y -= (BallBaseSpeed - SlowMotionSpeed) : velocity.Y += (BallBaseSpeed - SlowMotionSpeed);
 
-            _slowMotionTimer = new DispatcherTimer();
-            _slowMotionTimer.Interval = TimeSpan.FromSeconds(0.25);
-            _slowMotionTimer.Tick += timer_Tick;
-            _slowMotionTimer.Start();
-
+            GameTimeManager.SlowMotionTimeStart(SlowMotionTimer_Tick, SlowTimeAmmount);
             IsSlowMotionOn = true;
         }
         internal void SlowMotionOff()
@@ -207,10 +202,9 @@ namespace WallBreaker
             velocity.X = velocity.X > 0 ? velocity.X -= -(BallBaseSpeed - SlowMotionSpeed) : velocity.X += -(BallBaseSpeed - SlowMotionSpeed);
             velocity.Y = velocity.Y > 0 ? velocity.Y -= -(BallBaseSpeed - SlowMotionSpeed) : velocity.Y += -(BallBaseSpeed - SlowMotionSpeed);
         }
-        void timer_Tick(object sender, EventArgs e)
+        void SlowMotionTimer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("0,25 sec");
-            _slowMotionTimer.Stop();
+            GameTimeManager.SlowMotionTimeStop();
             SlowMotionOff();
         }
     }

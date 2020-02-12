@@ -11,10 +11,8 @@ namespace WallBreaker.GameObjects
         public Dictionary<Side, List<int>> sides = new Dictionary<Side, List<int>>();
         public double Width { get; set; }
         public double Height { get; set; }
-        public GameObject()
-        {
 
-        }
+
         public void CalculateSides()
         {
             List<int> topSide = Enumerable.Range((int)Position.X, (int)Width + 1).ToList();

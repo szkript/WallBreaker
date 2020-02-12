@@ -10,12 +10,9 @@ namespace WallBreaker
     public static class GameTimeManager
     {
         private static DispatcherTimer _gameloopTimer;
+        private static DispatcherTimer _slowMotionCooldownTimer;
+        private static DispatcherTimer _slowMotionTimer;
         public static DispatcherTimer _timer;
-
-        static GameTimeManager()
-        {
-
-        }
 
         internal static void StartGame(Action<object, EventArgs> gameLoop)
         {
@@ -40,5 +37,31 @@ namespace WallBreaker
             _timer.Tick += new EventHandler(dispatcherTimer_Tick);
             _timer.Start();
         }
+
+        internal static void SlowMotionCooldownStart(int slowMotionCooldownTime, Action<object, EventArgs> slowMotion_tick)
+        {
+            _slowMotionCooldownTimer = new DispatcherTimer();
+            _slowMotionCooldownTimer.Interval = TimeSpan.FromSeconds(slowMotionCooldownTime);
+            _slowMotionCooldownTimer.Tick += new EventHandler(slowMotion_tick);
+            _slowMotionCooldownTimer.Start();
+        }
+        internal static void SlowMotionCoolDownStop()
+        {
+            _slowMotionCooldownTimer.Stop();
+        }
+
+        internal static void SlowMotionTimeStart(Action<object, EventArgs> slowMotionTimer_Tick, double slowTimeAmmount)
+        {
+            _slowMotionTimer = new DispatcherTimer();
+            _slowMotionTimer.Interval = TimeSpan.FromSeconds(slowTimeAmmount);
+            _slowMotionTimer.Tick += new EventHandler(slowMotionTimer_Tick);
+            _slowMotionTimer.Start();
+            Console.WriteLine($"{slowTimeAmmount} sec");
+        }
+        internal static void SlowMotionTimeStop() 
+        {
+            _slowMotionTimer.Stop();
+        }
+
     }
 }
