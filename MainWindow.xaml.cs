@@ -14,7 +14,7 @@ namespace WallBreaker
         private Paddle paddle;
         private GameBall ball;
         private DispatcherTimer _timer;
-        private DispatcherTimer _gameloopTimer;
+        //private DispatcherTimer _gameloopTimer;
         private bool Paused { set; get; } = false;
         internal ObservableCollection<Brick> Bricks { get; set; }
 
@@ -128,8 +128,8 @@ namespace WallBreaker
 
         private void StopGame()
         {
-            _timer.Stop();
-            _gameloopTimer.Stop();
+            //GameTimeManager._timer.Stop();
+            GameTimeManager.StopGame();
         }
 
         private void PongCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -145,21 +145,8 @@ namespace WallBreaker
             ball = new GameBall(Ball, PongCanvas.ActualWidth, PongCanvas.ActualHeight, ballStartingVerticalPosition);
             paddle = new Paddle(Paddle, PongCanvas.ActualWidth);
 
-            _timer = new DispatcherTimer
-            {
-                Interval = new TimeSpan(0, 0, 1)
-            };
-            _timer.Tick += new EventHandler(DispatcherTimer_Tick);
-            _timer.Start();
-
-            _gameloopTimer = new DispatcherTimer
-            {
-                Interval = new TimeSpan(0, 0, 0, 0, 8)
-            };
-            _gameloopTimer.Tick += new EventHandler(GameLoop);
-            _gameloopTimer.Start();
-
-
+            GameTimeManager.GameTime(DispatcherTimer_Tick);           
+            GameTimeManager.StartGame(GameLoop);
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

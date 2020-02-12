@@ -79,7 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Game.cs" />
-    <Compile Include="GameHelper.cs" />
+    <Compile Include="GameTimeManager.cs" />
     <Compile Include="GameIdeas\GameIdeas.cs" />
     <Compile Include="GameObjects\Brick.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
