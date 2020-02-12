@@ -1,9 +1,9 @@
-﻿<Window x:Name="Exit_game" x:Class="Pong.ExitPopupWindow"
+﻿<Window x:Name="Exit_game" x:Class="WallBreaker.ExitPopupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Pong"
+        xmlns:local="clr-namespace:WallBreaker"
         mc:Ignorable="d"
         Title="Exit Game" Height="148.537" Width="261.829" WindowStartupLocation="CenterScreen">
     <Grid HorizontalAlignment="Left" Height="115" Margin="0,4,0,0" VerticalAlignment="Top" Width="252">

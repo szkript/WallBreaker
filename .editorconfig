@@ -5,3 +5,6 @@ dotnet_diagnostic.SA1614.severity = suggestion
 
 # CS0108: Member hides inherited member; missing new keyword
 dotnet_diagnostic.CS0108.severity = none
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = none
